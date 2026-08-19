@@ -427,3 +427,16 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local datasets and generated S1-DS-02 artifacts
+/data/
+*.csv
+*.zip
+*.parquet
+
+# Python local state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/

@@ -1,0 +1,50 @@
+{
+  "accepted_price_range": {
+    "max": 2574.07,
+    "min": 0.0
+  },
+  "accepted_rows": 42448764,
+  "accepted_time_range_utc": {
+    "max": "2019-10-31 23:59:59+00:00",
+    "min": "2019-10-01 00:00:00+00:00"
+  },
+  "batches": 85,
+  "contract": "ConversionReport v1",
+  "deterministic_order": [
+    "event_time",
+    "source_row_number"
+  ],
+  "duration_seconds": 114.555,
+  "event_counts": {
+    "cart": 926516,
+    "purchase": 742849,
+    "view": 40779399
+  },
+  "finished_utc": "2026-08-19T09:06:45.903415+00:00",
+  "parquet_files": 1,
+  "peak_rss_bytes": 5447294976,
+  "raw_null_counts": {
+    "brand": 6113008,
+    "category_code": 13515609,
+    "category_id": 0,
+    "event_time": 0,
+    "event_type": 0,
+    "price": 0,
+    "product_id": 0,
+    "user_id": 0,
+    "user_session": 2
+  },
+  "reconciliation_ok": true,
+  "rejected_rows": 0,
+  "rejection_counts": {
+    "CSV_PARSE_ERROR": 0,
+    "INVALID_PRICE": 0,
+    "INVALID_TIMESTAMP": 0,
+    "MISSING_REQUIRED_ID": 0,
+    "UNKNOWN_EVENT_TYPE": 0
+  },
+  "schema_version": 1,
+  "source_rows": 42448764,
+  "started_utc": "2026-08-19T09:04:51.346848+00:00",
+  "status": "COMPLETE"
+}

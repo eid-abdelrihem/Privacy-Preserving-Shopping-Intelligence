@@ -1,0 +1,24 @@
+{
+  "config_version": 1,
+  "contract": "ProcessedRawParquet v1",
+  "workspace": "..",
+  "input_csv": "../Dataset/2019-Oct.csv/2019-Oct.csv",
+  "input_manifest": "config/dataset_manifest.v1.json",
+  "output_directory": "artifacts/full-run",
+  "batch_size": 500000,
+  "compression": "zstd",
+  "compression_level": 6,
+  "statistics": true,
+  "deterministic_tie_key": ["event_time", "source_row_number"],
+  "allowed_event_types": ["view", "cart", "purchase"],
+  "required_non_null_ids": ["product_id", "category_id", "user_id"],
+  "nullable_fields": ["category_code", "brand", "user_session"],
+  "price_policy": {
+    "allow_zero": true,
+    "allow_negative": false
+  },
+  "rejection_priority": ["CSV_PARSE_ERROR", "MISSING_REQUIRED_ID", "INVALID_TIMESTAMP", "UNKNOWN_EVENT_TYPE", "INVALID_PRICE"],
+  "fail_if_any_rejected": true,
+  "verify_input_sha256": true,
+  "verify_expected_source_identity": true
+}

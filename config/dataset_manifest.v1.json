@@ -1,0 +1,27 @@
+{
+  "manifest_version": 1,
+  "dataset": {
+    "name": "REES46 Multi-category eCommerce Behavior Data",
+    "partition": "2019-10",
+    "role": "primary",
+    "intended_use": ["T1", "T2", "T3", "centralized_training", "federated_training", "on_device_evaluation"]
+  },
+  "source": {
+    "official_page": "https://rees46.com/en/datasets",
+    "download_page": "https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store?select=2019-Oct.csv",
+    "acquisition_date": "2026-08-15",
+    "source_record": "docs/data-source.md"
+  },
+  "raw_file": {
+    "filename": "2019-Oct.csv",
+    "size_bytes": 5668612855,
+    "sha256": "FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80",
+    "row_count": 42448764
+  },
+  "time_range": {
+    "min": "2019-10-01 00:00:00 UTC",
+    "max": "2019-10-31 23:59:59 UTC"
+  },
+  "event_types": ["view", "cart", "purchase"],
+  "columns": ["event_time", "event_type", "product_id", "category_id", "category_code", "brand", "price", "user_id", "user_session"]
+}

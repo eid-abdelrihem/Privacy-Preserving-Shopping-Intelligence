@@ -59,7 +59,7 @@ The October 2019 partition, `2019-Oct.csv`, was downloaded from this release.
 |---|---|
 | Filename | `2019-Oct.csv` |
 | Size | `5,668,612,855 bytes` |
-| SHA-256 | `FEDD938409B5E836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80` |
+| SHA-256 | `FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80` |
 | Raw rows | `42,448,764` |
 | Minimum timestamp | `2019-10-01 00:00:00 UTC` |
 | Maximum timestamp | `2019-10-31 23:59:59 UTC` |
@@ -67,7 +67,7 @@ The October 2019 partition, `2019-Oct.csv`, was downloaded from this release.
 ### Checksum record
 
 ```text
-FEDD938409B5E836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80  2019-Oct.csv
+FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80  2019-Oct.csv
 ```
 
 The checksum was calculated directly from the downloaded raw CSV before preprocessing.
@@ -99,7 +99,7 @@ source:
 raw_file:
   filename: 2019-Oct.csv
   size_bytes: 5668612855
-  sha256: FEDD938409B5E836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80
+  sha256: FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80
   row_count: 42448764
 
 time_range:
