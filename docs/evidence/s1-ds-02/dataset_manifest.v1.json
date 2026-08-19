@@ -1,0 +1,95 @@
+{
+  "columns": [
+    "event_time",
+    "event_type",
+    "product_id",
+    "category_id",
+    "category_code",
+    "brand",
+    "price",
+    "user_id",
+    "user_session"
+  ],
+  "dataset": {
+    "intended_use": [
+      "T1",
+      "T2",
+      "T3",
+      "centralized_training",
+      "federated_training",
+      "on_device_evaluation"
+    ],
+    "name": "REES46 Multi-category eCommerce Behavior Data",
+    "partition": "2019-10",
+    "role": "primary"
+  },
+  "event_types": [
+    "view",
+    "cart",
+    "purchase"
+  ],
+  "manifest_version": 1,
+  "processed_raw_parquet": {
+    "accepted_parts": [
+      {
+        "path": "processed_raw_parquet_v1.parquet",
+        "sha256": "8905CE1C6918BF00C2F96DC946B1D3A6A31B3928DB2C80AB5BC5C318E9DF61C6",
+        "size_bytes": 803389955
+      }
+    ],
+    "config_sha256": "A7A78A13951ECC991257580E12269F1D58375D866E941F912059FB286D160B73",
+    "config_version": 1,
+    "contract": "ProcessedRawParquet v1",
+    "input_sha256": "FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80",
+    "rejected_parts": [],
+    "rejection_enum": [
+      "CSV_PARSE_ERROR",
+      "MISSING_REQUIRED_ID",
+      "INVALID_TIMESTAMP",
+      "UNKNOWN_EVENT_TYPE",
+      "INVALID_PRICE"
+    ],
+    "row_counts": {
+      "accepted": 42448764,
+      "rejected": 0,
+      "source": 42448764
+    },
+    "schema": {
+      "brand": "String(nullable)",
+      "category_code": "String(nullable)",
+      "category_id": "String",
+      "event_time": "Datetime(us, UTC)",
+      "event_type": "String",
+      "price": "Float64",
+      "product_id": "String",
+      "source": "String",
+      "source_file": "String",
+      "source_row_number": "Int64",
+      "user_id": "String",
+      "user_session": "String(nullable)"
+    },
+    "status": "COMPLETE"
+  },
+  "raw_file": {
+    "filename": "2019-Oct.csv",
+    "row_count": 42448764,
+    "sha256": "FEDD938409B5F836EC89B39C861B13DAD99FC7CD9BEB1FDDD97A2D50488B5B80",
+    "size_bytes": 5668612855
+  },
+  "runtime": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "polars": "1.43.2",
+    "pyarrow": "21.0.0",
+    "python": "3.13.7"
+  },
+  "source": {
+    "acquisition_date": "2026-08-15",
+    "download_page": "https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store?select=2019-Oct.csv",
+    "official_page": "https://rees46.com/en/datasets",
+    "source_record": "../Repository/docs/data-source.md"
+  },
+  "time_range": {
+    "max": "2019-10-31 23:59:59 UTC",
+    "min": "2019-10-01 00:00:00 UTC"
+  }
+}
