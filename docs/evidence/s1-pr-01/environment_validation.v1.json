@@ -1,0 +1,47 @@
+﻿{
+    "schema":  "TrainingEnvironmentValidation",
+    "version":  1,
+    "task_id":  "S1-PR-01",
+    "validated_at_utc":  "2026-08-23T22:34:56.0488729Z",
+    "supported_python":  "3.11.14",
+    "dependency_spec":  "pyproject.toml",
+    "dependency_lock":  "uv.lock",
+    "lock_sha256":  "CD86BCDB34077EAEDD3CCF84E8DDC52A6424271CFD35F27BA0B7F32D7CBDF0DD",
+    "setup_command":  "uv sync --locked --group dev",
+    "smoke_command":  "uv run --locked python scripts/env_smoke.py",
+    "canonical_compute_backend":  "cpu",
+    "validation":  {
+                       "machine_id":  "ahmed-windows",
+                       "os":  "Windows-10-10.0.26200-SP0",
+                       "architecture":  "AMD64",
+                       "python":  "3.11.14",
+                       "torch":  "2.13.0+cpu",
+                       "flower":  "1.33.0",
+                       "ray":  "2.55.1",
+                       "polars":  "1.43.2",
+                       "pyarrow":  "21.0.0",
+                       "psutil":  "7.2.2",
+                       "scikit_learn":  "1.9.0",
+                       "lightgbm":  "4.7.0",
+                       "physical_nvidia_gpu":  "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+                       "nvidia_driver":  "546.30",
+                       "torch_cuda_runtime":  null,
+                       "torch_cuda_available":  false,
+                       "selected_device":  "cpu",
+                       "cpu_fallback":  "PASS",
+                       "tensor_oracle":  [
+                                             4,
+                                             6
+                                         ],
+                       "smoke_result":  "PASS",
+                       "ruff_check":  "PASS",
+                       "ruff_format_check":  "PASS",
+                       "clean_environment_rebuild":  "PASS"
+                   },
+    "second_machine_validation":  "PENDING",
+    "compatibility_notes":  [
+                                "The merged S1-DS-02 conversion evidence records Python 3.13.7.",
+                                "The S1-DS-02 self-test does not currently pass under the canonical Python 3.11.14 training environment.",
+                                "S1-PR-01 does not modify the already-merged S1-DS-02 conversion implementation."
+                            ]
+}
