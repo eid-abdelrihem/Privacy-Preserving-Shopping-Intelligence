@@ -15,3 +15,36 @@ python scripts/data/convert_rees46.py self-test
 Raw CSV, ZIP, and generated Parquet artifacts are intentionally excluded from
 normal Git history. The repository contains their versioned manifests, hashes,
 aggregate conversion report, and reproduction code.
+
+
+
+## Training / Federated Development Environment
+
+The canonical Phase 1 training environment is defined by:
+
+- `.python-version`
+- `pyproject.toml`
+- `uv.lock`
+
+First-time setup:
+
+```powershell
+uv python install 3.11.14
+uv sync --locked --group dev
+```
+
+Validate:
+
+```powershell
+uv run --locked python scripts/env_smoke.py
+```
+
+Expected final line:
+
+```text
+SMOKE STATUS: PASS
+```
+
+Full setup, VS Code, CPU/GPU, and compatibility documentation:
+
+[`docs/training-environment.md`](docs/training-environment.md)
