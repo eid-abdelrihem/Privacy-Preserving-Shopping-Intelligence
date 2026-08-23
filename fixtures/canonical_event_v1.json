@@ -1,0 +1,49 @@
+{
+  "schema_version": "CanonicalEvent/v1",
+  "dataset_id": "rees46:multi-category:2019-10",
+  "fields": {
+    "event_id": "string   - readable pointer back to the raw CSV row",
+    "event_time": "datetime - timezone aware, UTC",
+    "event_type": "string   - view | cart | purchase",
+    "user_id": "string   - namespaced, e.g. rees46:user:541312140",
+    "session_id": "string   - namespaced, or None when the source is empty",
+    "item_id": "string   - namespaced, e.g. rees46:item:44600062",
+    "category_id": "string   - namespaced",
+    "category_code": "string   - readable name, or __UNK__ when missing",
+    "brand": "string   - brand name, or __UNK__ when missing",
+    "price": "float    - raw price, no bucketing yet",
+    "source_row_number": "int      - original 1-based row number in the CSV",
+    "source_file": "string   - original source file name"
+  },
+  "allowed_event_types": [
+    "view",
+    "cart",
+    "purchase"
+  ],
+  "missing_value_token": "__UNK__",
+  "nullable_fields": [
+    "session_id",
+    "price"
+  ],
+  "row_order": [
+    "event_time",
+    "source_row_number"
+  ],
+  "id_namespaces": {
+    "user_id": "rees46:user:<raw id>",
+    "session_id": "rees46:session:<raw id>",
+    "item_id": "rees46:item:<raw id>",
+    "category_id": "rees46:category:<raw id>",
+    "event_id": "rees46:2019-10:<raw csv row number>"
+  },
+  "fixture": {
+    "smoke_sample.parquet": {
+      "description": "every event of a deterministic slice of real users",
+      "selection_rule": "user_id % 2000 == 7",
+      "intended_use": "interface and integration testing, not a training cohort",
+      "users": 1499,
+      "events": 23109,
+      "users_with_20_plus_events": 281
+    }
+  }
+}
