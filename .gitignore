@@ -434,6 +434,10 @@ FodyWeavers.xsd
 *.zip
 *.parquet
 
+# Exception: the small shared test fixture is committed on purpose so the
+# other lanes can build against real canonical rows without the full dataset.
+!fixtures/smoke_sample.parquet
+
 # Python local state
 __pycache__/
 *.py[cod]
