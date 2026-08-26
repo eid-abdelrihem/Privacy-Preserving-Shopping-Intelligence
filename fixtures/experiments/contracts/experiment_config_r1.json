@@ -1,0 +1,144 @@
+{
+  "schema": "experiment_config_v1",
+  "version": "1",
+  "config_id": "test_cfg",
+  "regime": "R1",
+  "tasks": [
+    "T1"
+  ],
+  "training_cohort": "C1",
+  "evaluation_cohorts": [
+    "C1"
+  ],
+  "seed": 13,
+  "source_dataset_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "canonical_data_contract_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "cohort_manifest_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "split_manifest_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "task_examples_manifest_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "evaluation_manifest_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "representation_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "model_config_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "objective_config_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "shared_trainer_core_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "evaluation_protocol_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "evaluator_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "environment_lock_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "initialization": {
+    "kind": "COMMON_INITIALIZATION",
+    "common_initialization_ref": {
+      "schema": "artifact_ref_v1",
+      "version": "1",
+      "logical_id": "test_artifact",
+      "artifact_schema": "model_config_v1",
+      "artifact_version": "1",
+      "uri": "config/experiments/schemas/model_config.v1.schema.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "regime_config": {}
+}

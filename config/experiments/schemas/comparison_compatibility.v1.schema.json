@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/comparison_compatibility_v1.schema.json",
+  "title": "ComparisonCompatibility v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "tasks",
+    "training_cohort",
+    "evaluation_cohorts",
+    "seed",
+    "source_dataset_sha256",
+    "canonical_data_contract_sha256",
+    "cohort_manifest_sha256",
+    "split_manifest_sha256",
+    "task_examples_manifest_sha256",
+    "evaluation_manifest_sha256",
+    "representation_sha256",
+    "model_config_sha256",
+    "objective_config_sha256",
+    "shared_trainer_core_sha256",
+    "common_initialization_sha256",
+    "evaluation_protocol_sha256",
+    "evaluator_sha256",
+    "environment_lock_sha256",
+    "git_sha"
+  ],
+  "properties": {
+    "schema": { "const": "comparison_compatibility_v1" },
+    "version": { "const": "1" },
+    "tasks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "training_cohort": { "type": "string" },
+    "evaluation_cohorts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "seed": { "type": "integer" },
+    "source_dataset_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "canonical_data_contract_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "cohort_manifest_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "split_manifest_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "task_examples_manifest_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "evaluation_manifest_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "representation_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "model_config_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "objective_config_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "shared_trainer_core_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "common_initialization_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "evaluation_protocol_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "evaluator_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "environment_lock_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "git_sha": { "type": "string", "minLength": 1 }
+  }
+}

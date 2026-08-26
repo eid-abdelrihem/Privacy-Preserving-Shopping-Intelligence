@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/schemas/experiment_contract_validation_summary.v1.schema.json",
+  "title": "Experiment Contract Validation Summary v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "status", "timestamp_utc", "validated_schemas", "validated_fixtures"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "experiment_contract_validation_summary_v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "validated_schemas": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "validated_fixtures": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

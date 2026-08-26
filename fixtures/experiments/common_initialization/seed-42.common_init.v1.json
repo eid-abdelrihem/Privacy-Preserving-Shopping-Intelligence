@@ -1,0 +1,22 @@
+{
+  "schema": "common_initialization_v1",
+  "version": "1",
+  "regime": "R1",
+  "tasks": [
+    "T1"
+  ],
+  "model_config_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "seed": 42,
+  "initializer_git_sha": "ffffffffffffffffffffffffffffffffffffffff",
+  "artifact_kind": "FIXTURE_PROOF",
+  "state_sha256": "9820eb335e92ae18ed858011a6ba2f2893cc61311d7e8c9aed16f6939eaadb5d",
+  "state_size_bytes": 676
+}

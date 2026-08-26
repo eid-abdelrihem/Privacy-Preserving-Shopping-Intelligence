@@ -1,0 +1,37 @@
+{
+  "schema": "experiment_contract_freeze_v1",
+  "version": "1",
+  "task_id": "S1-PR-03",
+  "issue": 16,
+  "approval_basis": "technical_freeze_by_project_owner_delegation",
+  "pr_review_required_before_merge": true,
+  "independent_team_deliberation_claimed": false,
+  "frozen_decisions": [
+    "record_identity_version_convention",
+    "canonical_json_v1",
+    "shared_artifact_ref_v1",
+    "model_config_v1",
+    "experiment_config_v1",
+    "run_id_grammar_v1",
+    "attempt_resume_semantics",
+    "r1_r2a_compatibility_tuple_v1",
+    "common_initialization_state_serialization_v1",
+    "experiment_result_v1",
+    "fixture_config_structure",
+    "regime_invariance_corrections",
+    "evidence_immutability_order"
+  ],
+  "frozen_seeds": [13, 42, 2026],
+  "frozen_regimes": ["R1", "R2A", "R2B", "R3", "R4", "R5"],
+  "frozen_tasks": ["T1", "T2", "T3"],
+  "frozen_cohorts": ["C1", "C2", "C3"],
+  "frozen_run_states": ["PLANNED", "RUNNING", "INTERRUPTED", "SUCCEEDED", "FAILED", "CANCELLED"],
+  "fixture_architecture_id": "fixture_linear_v1",
+  "fixture_dimensions": {
+    "input_dim": 3,
+    "output_dim": 2,
+    "bias": true
+  },
+  "authority_source": ".antigravity-work/tasks/S1-PR-03/14_FINAL_CONTRACT_FREEZE.md",
+  "decision_principles": ".antigravity-work/tasks/S1-PR-03/13_DECISION_PRINCIPLES.md"
+}

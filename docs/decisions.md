@@ -48,3 +48,23 @@ The member should move to another ready task whenever possible instead of waitin
 We will follow the "Assemble, Don't Build" principle.
 
 We will use established tools for standard infrastructure whenever possible and focus our implementation effort on the research-specific parts of the project.
+
+
+## S1-PR-03 — Experiment Contract Freeze
+
+The project freezes the S1-PR-03 reproducibility contracts for experiment
+configuration, result identity, common initialization, and R1/R2A comparison.
+
+- Allowed seeds: `13`, `42`, `2026`.
+- R1–R4 use the same seed-specific untrained CommonInitialization.
+- R5 starts from a trained R1 checkpoint.
+- Run IDs use the versioned `run-v1` grammar.
+- Attempts start at 1; terminal attempts are immutable.
+- ExperimentResult references SystemMeasurement records rather than duplicating
+  measurement values.
+- The detailed machine-readable freeze is recorded in
+  `config/experiments/contract_freeze.v1.json`.
+
+The technical freeze was approved for implementation under the project-owner
+decision process. The implementation PR still requires review and approval by
+another team member before merge.

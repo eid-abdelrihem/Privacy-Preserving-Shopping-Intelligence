@@ -1,0 +1,11 @@
+{
+  "schema": "metric_record_v1",
+  "version": "1",
+  "metric_id": "test_metric",
+  "task": "T1",
+  "cohort": "C1",
+  "value": 0.95,
+  "direction": "MAXIMIZE",
+  "unit": "FRACTION",
+  "support": 1000
+}

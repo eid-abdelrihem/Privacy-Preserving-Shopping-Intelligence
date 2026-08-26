@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/schemas/experiment_artifact_map.v1.schema.json",
+  "title": "Experiment Artifact Map v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "artifacts"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "experiment_artifact_map_v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z0-9_]+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "description"],
+          "properties": {
+            "path": { "type": "string" },
+            "description": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

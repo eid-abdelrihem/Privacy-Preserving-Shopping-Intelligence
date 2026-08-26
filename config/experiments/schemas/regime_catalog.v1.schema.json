@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/schemas/regime_catalog.v1.schema.json",
+  "title": "Regime Catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "regimes"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "regime_catalog_v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "regimes": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^R[1-5][A-Z]*$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "orchestration_type"],
+          "properties": {
+            "description": { "type": "string" },
+            "orchestration_type": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

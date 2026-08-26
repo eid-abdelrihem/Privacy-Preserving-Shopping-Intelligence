@@ -1,0 +1,30 @@
+{
+  "schema": "regime_catalog_v1",
+  "version": "1",
+  "regimes": {
+    "R1": {
+      "description": "Fully centralized oracle baseline (upper bound)",
+      "orchestration_type": "CENTRALIZED"
+    },
+    "R2A": {
+      "description": "Independent models (lower bound)",
+      "orchestration_type": "FEDAVG"
+    },
+    "R2B": {
+      "description": "Federated averaging with FedAdam",
+      "orchestration_type": "FEDADAM"
+    },
+    "R3": {
+      "description": "Personalized-FL orchestration + local adapter identity",
+      "orchestration_type": "PERSONALIZED_FL"
+    },
+    "R4": {
+      "description": "Strict-local orchestration",
+      "orchestration_type": "STRICT_LOCAL"
+    },
+    "R5": {
+      "description": "Local-adaptation orchestration",
+      "orchestration_type": "LOCAL_ADAPTATION"
+    }
+  }
+}

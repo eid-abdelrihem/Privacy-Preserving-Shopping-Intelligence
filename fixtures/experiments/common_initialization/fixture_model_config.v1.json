@@ -1,0 +1,22 @@
+{
+  "schema": "model_config_v1",
+  "version": "1",
+  "model_config_id": "test_mc",
+  "model_family": "test_family",
+  "architecture_id": "fixture_linear_v1",
+  "architecture_version": "1",
+  "parameter_dtype": "float32",
+  "architecture_parameters": {
+    "input_dim": 3,
+    "output_dim": 2,
+    "bias": true
+  },
+  "task_heads": [
+    {
+      "task": "T1",
+      "head_id": "h1",
+      "head_version": "1",
+      "output_dim": 2
+    }
+  ]
+}

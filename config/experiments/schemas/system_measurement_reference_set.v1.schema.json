@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/system_measurement_reference_set_v1.schema.json",
+  "title": "SystemMeasurementReferenceSet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "status"],
+  "properties": {
+    "schema": { "const": "system_measurement_reference_set_v1" },
+    "version": { "const": "1" },
+    "status": {
+      "type": "string",
+      "enum": ["AVAILABLE", "PENDING", "NOT_APPLICABLE"]
+    },
+    "refs": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "null_reason": { "type": "string", "minLength": 1 }
+  }
+}

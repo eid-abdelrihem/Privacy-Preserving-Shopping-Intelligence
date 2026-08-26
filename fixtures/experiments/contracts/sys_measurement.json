@@ -1,0 +1,16 @@
+{
+  "schema": "system_measurement_reference_set_v1",
+  "version": "1",
+  "status": "AVAILABLE",
+  "refs": [
+    {
+      "schema": "artifact_ref_v1",
+      "version": "1",
+      "logical_id": "test_artifact",
+      "artifact_schema": "model_config_v1",
+      "artifact_version": "1",
+      "uri": "config/experiments/schemas/model_config.v1.schema.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}

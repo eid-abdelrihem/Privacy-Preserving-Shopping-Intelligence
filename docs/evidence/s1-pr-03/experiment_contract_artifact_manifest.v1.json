@@ -1,0 +1,131 @@
+{
+  "schema": "experiment_contract_artifact_manifest_v1",
+  "version": "1",
+  "artifacts": [
+    {
+      "logical_id": "ExperimentConfigSchema",
+      "uri": "config/experiments/schemas/experiment_config.v1.schema.json",
+      "sha256": "c5fc5f0a8a6bc472ff6eac3ac4250ce75c1769380e875a9f87d838ee98de2012"
+    },
+    {
+      "logical_id": "ModelConfigSchema",
+      "uri": "config/experiments/schemas/model_config.v1.schema.json",
+      "sha256": "c9c187a046ba0a04a3696f03131b97e4fbeb2851a4b2245b26e580ce92e11708"
+    },
+    {
+      "logical_id": "ComparisonCompatibilitySchema",
+      "uri": "config/experiments/schemas/comparison_compatibility.v1.schema.json",
+      "sha256": "537d37f4d99cd7fbc8547bf4343f59a3afeb0b5e9214275babcfe4c7a6f5a5e2"
+    },
+    {
+      "logical_id": "MetricRecordSchema",
+      "uri": "config/experiments/schemas/metric_record.v1.schema.json",
+      "sha256": "0cd0f3d8471432008cddd33d470079c1cdba5b3ce9d4b3633b494a4bf1bd9325"
+    },
+    {
+      "logical_id": "SystemMeasurementSchema",
+      "uri": "config/experiments/schemas/system_measurement_reference_set.v1.schema.json",
+      "sha256": "7d9e2b2d0c8fd7c97a0e8170c63e5dcc1b66b819b5c15097a44d361309d84a92"
+    },
+    {
+      "logical_id": "ExperimentResultSchema",
+      "uri": "config/experiments/schemas/experiment_result.v1.schema.json",
+      "sha256": "5111d0b3caa2268b55820b282cbc653a048affff24fcce6421a641ab2729c63c"
+    },
+    {
+      "logical_id": "CommonInitializationSchema",
+      "uri": "config/experiments/schemas/common_initialization.v1.schema.json",
+      "sha256": "abca228345f039da3f5303d8fb4cafe5f58694733da161ed01a521464ca14b77"
+    },
+    {
+      "logical_id": "ExperimentArtifactMapSchema",
+      "uri": "config/experiments/schemas/experiment_artifact_map.v1.schema.json",
+      "sha256": "87fdac9079846c5d0b6bf491d30b7e30649a3f64765605eb56ac40c5b221c80f"
+    },
+    {
+      "logical_id": "RegimeCatalogSchema",
+      "uri": "config/experiments/schemas/regime_catalog.v1.schema.json",
+      "sha256": "599de0a73582a4e13abd342378884ecd469264309bf60a5fea10ec9ba0154533"
+    },
+    {
+      "logical_id": "ContractValidationSummarySchema",
+      "uri": "config/experiments/schemas/experiment_contract_validation_summary.v1.schema.json",
+      "sha256": "1776907419ec10e0e0c58b98c9b09a6d6c792167cbf1f1e65cd026c76baa9335"
+    },
+    {
+      "logical_id": "ExperimentContractArtifactManifestSchema",
+      "uri": "config/experiments/schemas/experiment_contract_artifact_manifest.v1.schema.json",
+      "sha256": "b540871a0738278f157d9057d47655082334c73ea27748204f3a118cfce57903"
+    },
+    {
+      "logical_id": "ArtifactRefSchema",
+      "uri": "config/experiments/schemas/artifact_ref.v1.schema.json",
+      "sha256": "390338c69a7890f0592d9632e5a1d022bf289eddb7ebb0ab95ad55cb61bd05ae"
+    },
+    {
+      "logical_id": "ExperimentContractFreezeSchema",
+      "uri": "config/experiments/schemas/experiment_contract_freeze.v1.schema.json",
+      "sha256": "76b5fd8cd27b3c1b96d807ff147df436ed3e4bf0a2defafbee06e33864b98320"
+    },
+    {
+      "logical_id": "ExperimentContractFreeze",
+      "uri": "config/experiments/contract_freeze.v1.json",
+      "sha256": "240cc4be59ba5841e1e6fb977ad873b107895dd7c3b03890e747f42eea33f792"
+    },
+    {
+      "logical_id": "RegimeCatalog",
+      "uri": "config/experiments/regime_catalog.v1.json",
+      "sha256": "e8d85b82f7e44f53f2509bb166125a738bc4066863c2cdb0cbc4665d4e4a497f"
+    },
+    {
+      "logical_id": "ExperimentArtifactMap",
+      "uri": "config/experiments/experiment_artifact_map.v1.json",
+      "sha256": "cc68d6bc3b532fd102ddb1928c363bd528f4877b444902a23565e5e0d1942363"
+    },
+    {
+      "logical_id": "ExperimentContractsPrimitives",
+      "uri": "scripts/experiments/contracts.py",
+      "sha256": "b2780019d44a92b739cde0b0702ee6408ad56e9d018b1d9bfa96aa736bdc4a69"
+    },
+    {
+      "logical_id": "ExperimentSchemaValidators",
+      "uri": "scripts/experiments/schemas.py",
+      "sha256": "302804830fd995d418f4e4f02ad58836740507860f6fdd52b7dcf8892d6b0515"
+    },
+    {
+      "logical_id": "ExperimentCompatibility",
+      "uri": "scripts/experiments/compatibility.py",
+      "sha256": "a48aaab95dc7e5ecfc9509661152eebf54440387a8a8b22ac82cdb8ba83d9b77"
+    },
+    {
+      "logical_id": "ExperimentInitialization",
+      "uri": "scripts/experiments/initialization.py",
+      "sha256": "d09a39063df34045f56b3f0aea7ec44cc300dd86ad6e463c363c4a201af51574"
+    },
+    {
+      "logical_id": "ExperimentCommonInitFixtureProofs",
+      "uri": "fixtures/experiments/common_initialization/",
+      "sha256": "453971d6fc27fc9d8ac6ba46979a7643216bdc93b71a8bc23febbd8f65ba1958"
+    },
+    {
+      "logical_id": "ExperimentContractValidator",
+      "uri": "scripts/experiments/validate_experiment_contracts.py",
+      "sha256": "6c4aef098733e71bc0be6a5d102c713937cdc59d60666dc2e7d2dfea292de5a7"
+    },
+    {
+      "logical_id": "ExperimentContractsDocs",
+      "uri": "docs/experiment-contracts.md",
+      "sha256": "0d990fa4e92f69b475c169806f31215cd95ce01db699f96fe774cb61e125d09f"
+    },
+    {
+      "logical_id": "ExperimentContractsDecisionEntry",
+      "uri": "docs/decisions.md",
+      "sha256": "d3ab7fe1c56b7baf4132f24be1f3aef76d450426bec569e55d32e6784e044de2"
+    },
+    {
+      "logical_id": "ExperimentContractsEvidence",
+      "uri": "docs/evidence/s1-pr-03/",
+      "sha256": "8dabe8cc46b622e4bd9a9e18ce4b9875b573120c29e417540f32925180fb154b"
+    }
+  ]
+}

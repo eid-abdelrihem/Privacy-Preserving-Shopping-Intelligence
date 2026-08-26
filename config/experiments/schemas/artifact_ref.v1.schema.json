@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppsi.example.com/artifact_ref.v1.schema.json",
+  "title": "ArtifactRef v1",
+  "description": "Shared ArtifactRef v1.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "artifact_ref_v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "logical_id": {
+      "type": "string"
+    },
+    "artifact_schema": {
+      "type": "string"
+    },
+    "artifact_version": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema",
+    "version",
+    "logical_id",
+    "artifact_schema",
+    "artifact_version",
+    "uri",
+    "sha256"
+  ],
+  "additionalProperties": false
+}

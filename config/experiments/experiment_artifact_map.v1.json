@@ -1,0 +1,106 @@
+{
+  "schema": "experiment_artifact_map_v1",
+  "version": "1",
+  "artifacts": {
+    "ExperimentConfigSchema": {
+      "path": "config/experiments/schemas/experiment_config.v1.schema.json",
+      "description": "Artifact ExperimentConfigSchema"
+    },
+    "ModelConfigSchema": {
+      "path": "config/experiments/schemas/model_config.v1.schema.json",
+      "description": "Artifact ModelConfigSchema"
+    },
+    "ComparisonCompatibilitySchema": {
+      "path": "config/experiments/schemas/comparison_compatibility.v1.schema.json",
+      "description": "Artifact ComparisonCompatibilitySchema"
+    },
+    "MetricRecordSchema": {
+      "path": "config/experiments/schemas/metric_record.v1.schema.json",
+      "description": "Artifact MetricRecordSchema"
+    },
+    "SystemMeasurementSchema": {
+      "path": "config/experiments/schemas/system_measurement_reference_set.v1.schema.json",
+      "description": "Artifact SystemMeasurementSchema"
+    },
+    "ExperimentResultSchema": {
+      "path": "config/experiments/schemas/experiment_result.v1.schema.json",
+      "description": "Artifact ExperimentResultSchema"
+    },
+    "CommonInitializationSchema": {
+      "path": "config/experiments/schemas/common_initialization.v1.schema.json",
+      "description": "Artifact CommonInitializationSchema"
+    },
+    "ExperimentArtifactMapSchema": {
+      "path": "config/experiments/schemas/experiment_artifact_map.v1.schema.json",
+      "description": "Artifact ExperimentArtifactMapSchema"
+    },
+    "RegimeCatalogSchema": {
+      "path": "config/experiments/schemas/regime_catalog.v1.schema.json",
+      "description": "Artifact RegimeCatalogSchema"
+    },
+    "ContractValidationSummarySchema": {
+      "path": "config/experiments/schemas/experiment_contract_validation_summary.v1.schema.json",
+      "description": "Artifact ContractValidationSummarySchema"
+    },
+    "ExperimentContractArtifactManifestSchema": {
+      "path": "config/experiments/schemas/experiment_contract_artifact_manifest.v1.schema.json",
+      "description": "Artifact ExperimentContractArtifactManifestSchema"
+    },
+    "ArtifactRefSchema": {
+      "path": "config/experiments/schemas/artifact_ref.v1.schema.json",
+      "description": "Artifact ArtifactRefSchema"
+    },
+    "ExperimentContractFreezeSchema": {
+      "path": "config/experiments/schemas/experiment_contract_freeze.v1.schema.json",
+      "description": "Artifact ExperimentContractFreezeSchema"
+    },
+    "ExperimentContractFreeze": {
+      "path": "config/experiments/contract_freeze.v1.json",
+      "description": "Artifact ExperimentContractFreeze"
+    },
+    "RegimeCatalog": {
+      "path": "config/experiments/regime_catalog.v1.json",
+      "description": "Artifact RegimeCatalog"
+    },
+    "ExperimentArtifactMap": {
+      "path": "config/experiments/experiment_artifact_map.v1.json",
+      "description": "Artifact ExperimentArtifactMap"
+    },
+    "ExperimentContractsPrimitives": {
+      "path": "scripts/experiments/contracts.py",
+      "description": "Artifact ExperimentContractsPrimitives"
+    },
+    "ExperimentSchemaValidators": {
+      "path": "scripts/experiments/schemas.py",
+      "description": "Artifact ExperimentSchemaValidators"
+    },
+    "ExperimentCompatibility": {
+      "path": "scripts/experiments/compatibility.py",
+      "description": "Artifact ExperimentCompatibility"
+    },
+    "ExperimentInitialization": {
+      "path": "scripts/experiments/initialization.py",
+      "description": "Artifact ExperimentInitialization"
+    },
+    "ExperimentCommonInitFixtureProofs": {
+      "path": "fixtures/experiments/common_initialization/",
+      "description": "Artifact ExperimentCommonInitFixtureProofs"
+    },
+    "ExperimentContractValidator": {
+      "path": "scripts/experiments/validate_experiment_contracts.py",
+      "description": "Artifact ExperimentContractValidator"
+    },
+    "ExperimentContractsDocs": {
+      "path": "docs/experiment-contracts.md",
+      "description": "Artifact ExperimentContractsDocs"
+    },
+    "ExperimentContractsDecisionEntry": {
+      "path": "docs/decisions.md",
+      "description": "Artifact ExperimentContractsDecisionEntry"
+    },
+    "ExperimentContractsEvidence": {
+      "path": "docs/evidence/s1-pr-03/",
+      "description": "Artifact ExperimentContractsEvidence"
+    }
+  }
+}
