@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/metric_record_v1.schema.json",
+  "title": "MetricRecord v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "metric_id",
+    "task",
+    "cohort",
+    "value",
+    "direction",
+    "unit"
+  ],
+  "properties": {
+    "schema": { "const": "metric_record_v1" },
+    "version": { "const": "1" },
+    "metric_id": { "type": "string", "minLength": 1 },
+    "task": { "type": "string", "minLength": 1 },
+    "cohort": { "type": "string", "minLength": 1 },
+    "value": { "type": "number" },
+    "direction": { "enum": ["MAXIMIZE", "MINIMIZE", "NEUTRAL"] },
+    "unit": { "enum": ["FRACTION", "RATIO", "COUNT", "UNITLESS"] },
+    "support": { "type": "integer", "minimum": 0 },
+    "support_null_reason": { "type": "string", "minLength": 1 }
+  },
+  "oneOf": [
+    { "required": ["support"] },
+    { "required": ["support_null_reason"] }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/common_initialization_v1.schema.json",
+  "title": "CommonInitialization v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "regime",
+    "tasks",
+    "model_config_ref",
+    "seed",
+    "initializer_git_sha"
+  ],
+  "properties": {
+    "schema": { "const": "common_initialization_v1" },
+    "version": { "const": "1" },
+    "regime": { "type": "string" },
+    "tasks": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "model_config_ref": { "type": "object" },
+    "seed": { "type": "integer" },
+    "initializer_git_sha": { "type": "string", "minLength": 1 }
+  }
+}

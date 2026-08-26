@@ -1,0 +1,116 @@
+{
+  "schema": "experiment_result_v1",
+  "version": "1",
+  "run_id": "run-v1__r1__t1__c1__s13__cfgaaaaaaaaaaaa__a1",
+  "attempt": 1,
+  "state": "SUCCEEDED",
+  "regime": "R1",
+  "tasks": [
+    "T1"
+  ],
+  "training_cohort": "C1",
+  "evaluation_cohorts": [
+    "C1"
+  ],
+  "seed": 13,
+  "config_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "compatibility": {
+    "schema": "comparison_compatibility_v1",
+    "version": "1",
+    "tasks": [
+      "T1"
+    ],
+    "training_cohort": "C1",
+    "evaluation_cohorts": [
+      "C1"
+    ],
+    "seed": 13,
+    "source_dataset_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "canonical_data_contract_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "cohort_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "split_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "task_examples_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluation_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "representation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "model_config_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "objective_config_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "shared_trainer_core_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "common_initialization_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluation_protocol_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluator_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "environment_lock_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "git_sha": "ffffffffffffffffffffffffffffffffffffffff"
+  },
+  "git_sha": "ffffffffffffffffffffffffffffffffffffffff",
+  "environment_lock_ref": {
+    "schema": "artifact_ref_v1",
+    "version": "1",
+    "logical_id": "test_artifact",
+    "artifact_schema": "model_config_v1",
+    "artifact_version": "1",
+    "uri": "config/experiments/schemas/model_config.v1.schema.json",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "initialization": {
+    "kind": "COMMON_INITIALIZATION",
+    "common_initialization_ref": {
+      "schema": "artifact_ref_v1",
+      "version": "1",
+      "logical_id": "test_artifact",
+      "artifact_schema": "model_config_v1",
+      "artifact_version": "1",
+      "uri": "config/experiments/schemas/model_config.v1.schema.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "started_at_utc": "2026-01-15T10:30:00Z",
+  "ended_at_utc": "2026-01-15T10:30:00Z",
+  "metrics": [
+    {
+      "schema": "metric_record_v1",
+      "version": "1",
+      "metric_id": "test_metric",
+      "task": "T1",
+      "cohort": "C1",
+      "value": 0.95,
+      "direction": "MAXIMIZE",
+      "unit": "FRACTION",
+      "support": 1000
+    }
+  ],
+  "artifacts": [
+    {
+      "schema": "artifact_ref_v1",
+      "version": "1",
+      "logical_id": "test_artifact",
+      "artifact_schema": "model_config_v1",
+      "artifact_version": "1",
+      "uri": "config/experiments/schemas/model_config.v1.schema.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "system_measurements": {
+    "schema": "system_measurement_reference_set_v1",
+    "version": "1",
+    "status": "AVAILABLE",
+    "refs": [
+      {
+        "schema": "artifact_ref_v1",
+        "version": "1",
+        "logical_id": "test_artifact",
+        "artifact_schema": "model_config_v1",
+        "artifact_version": "1",
+        "uri": "config/experiments/schemas/model_config.v1.schema.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  }
+}

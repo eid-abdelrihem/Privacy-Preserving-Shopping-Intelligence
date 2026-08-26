@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/schemas/experiment_contract_artifact_manifest.v1.schema.json",
+  "title": "Experiment Contract Artifact Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "artifacts"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "experiment_contract_artifact_manifest_v1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z0-9_]+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": { "type": "string" },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

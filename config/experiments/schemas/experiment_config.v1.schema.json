@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/experiment_config_v1.schema.json",
+  "title": "ExperimentConfig v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "config_id",
+    "regime",
+    "tasks",
+    "training_cohort",
+    "evaluation_cohorts",
+    "seed",
+    "source_dataset_ref",
+    "canonical_data_contract_ref",
+    "cohort_manifest_ref",
+    "split_manifest_ref",
+    "task_examples_manifest_ref",
+    "evaluation_manifest_ref",
+    "representation_ref",
+    "model_config_ref",
+    "objective_config_ref",
+    "shared_trainer_core_ref",
+    "evaluation_protocol_ref",
+    "evaluator_ref",
+    "environment_lock_ref",
+    "initialization",
+    "regime_config"
+  ],
+  "properties": {
+    "schema": { "const": "experiment_config_v1" },
+    "version": { "const": "1" },
+    "config_id": { "type": "string", "minLength": 1 },
+    "regime": {
+      "type": "string",
+      "enum": ["R1", "R2A", "R2B", "R3", "R4", "R5"]
+    },
+    "tasks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "training_cohort": { "type": "string" },
+    "evaluation_cohorts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "seed": { "type": "integer" },
+    "source_dataset_ref": { "type": "object" },
+    "canonical_data_contract_ref": { "type": "object" },
+    "cohort_manifest_ref": { "type": "object" },
+    "split_manifest_ref": { "type": "object" },
+    "task_examples_manifest_ref": { "type": "object" },
+    "evaluation_manifest_ref": { "type": "object" },
+    "representation_ref": { "type": "object" },
+    "model_config_ref": { "type": "object" },
+    "objective_config_ref": { "type": "object" },
+    "shared_trainer_core_ref": { "type": "object" },
+    "evaluation_protocol_ref": { "type": "object" },
+    "evaluator_ref": { "type": "object" },
+    "environment_lock_ref": { "type": "object" },
+    "initialization": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["COMMON_INITIALIZATION", "PRETRAINED_R1_CHECKPOINT"]
+        },
+        "common_initialization_ref": { "type": "object" },
+        "pretrained_checkpoint_ref": { "type": "object" },
+        "parent_run_id": { "type": "string" }
+      },
+      "required": ["kind"],
+      "additionalProperties": false
+    },
+    "regime_config": { "type": "object" },
+    "measurement_protocol_ref": { "type": "object" }
+  }
+}

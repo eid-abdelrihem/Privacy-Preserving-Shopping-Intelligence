@@ -14,6 +14,31 @@
 | `FLSyntheticSmokeLifecycleTest` | `tests/federated/test_fl_synthetic_smoke.py` | v1 | S1-PR-02 | CI |
 | `FLSyntheticSmokeDocs` | `docs/federated-synthetic-smoke.md` | v1 | S1-PR-02 | Developers |
 | `FLSyntheticSmokeArtifactManifest` | `docs/evidence/s1-pr-02/artifact_manifest.v1.json` | v1 | S1-PR-02 | S1-PR-05 |
+| `ExperimentConfigSchema` | `config/experiments/schemas/experiment_config.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ModelConfigSchema` | `config/experiments/schemas/model_config.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ComparisonCompatibilitySchema` | `config/experiments/schemas/comparison_compatibility.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `MetricRecordSchema` | `config/experiments/schemas/metric_record.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `SystemMeasurementSchema` | `config/experiments/schemas/system_measurement_reference_set.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentResultSchema` | `config/experiments/schemas/experiment_result.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `CommonInitializationSchema` | `config/experiments/schemas/common_initialization.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentArtifactMapSchema` | `config/experiments/schemas/experiment_artifact_map.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `RegimeCatalogSchema` | `config/experiments/schemas/regime_catalog.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ContractValidationSummarySchema` | `config/experiments/schemas/experiment_contract_validation_summary.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractArtifactManifestSchema` | `config/experiments/schemas/experiment_contract_artifact_manifest.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ArtifactRefSchema` | `config/experiments/schemas/artifact_ref.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractFreezeSchema` | `config/experiments/schemas/experiment_contract_freeze.v1.schema.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractFreeze` | `config/experiments/contract_freeze.v1.json` | v1 | S1-PR-03 | S1-PR-05, Developers |
+| `RegimeCatalog` | `config/experiments/regime_catalog.v1.json` | v1 | S1-PR-03 | S1-PR-05, Developers |
+| `ExperimentArtifactMap` | `config/experiments/experiment_artifact_map.v1.json` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractsPrimitives` | `scripts/experiments/contracts.py` | v1 | S1-PR-03 | S1-PR-05, #18, #19, #27, #36, #51 |
+| `ExperimentSchemaValidators` | `scripts/experiments/schemas.py` | v1 | S1-PR-03 | S1-PR-05, #18, #19, #27, #36, #51 |
+| `ExperimentCompatibility` | `scripts/experiments/compatibility.py` | v1 | S1-PR-03 | #36, #51 |
+| `ExperimentInitialization` | `scripts/experiments/initialization.py` | v1 | S1-PR-03 | S1-PR-05 |
+| `ExperimentCommonInitFixtureProofs` | `fixtures/experiments/common_initialization/` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractValidator` | `scripts/experiments/validate_experiment_contracts.py` | v1 | S1-PR-03 | CI |
+| `ExperimentContractsDocs` | `docs/experiment-contracts.md` | v1 | S1-PR-03 | Developers |
+| `ExperimentContractsDecisionEntry` | `docs/decisions.md` (S1-PR-03 section) | v1 | S1-PR-03 | Developers |
+| `ExperimentContractsEvidence` | `docs/evidence/s1-pr-03/` | v1 | S1-PR-03 | S1-PR-05 |
 
 ## Rules
 

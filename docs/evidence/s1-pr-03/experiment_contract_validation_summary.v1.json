@@ -1,0 +1,7 @@
+{
+  "schema": "experiment_contract_validation_summary_v1",
+  "version": "1",
+  "validated_contract_count": 22,
+  "all_passed": true,
+  "validation_environment": "pytest/canonical-validation"
+}

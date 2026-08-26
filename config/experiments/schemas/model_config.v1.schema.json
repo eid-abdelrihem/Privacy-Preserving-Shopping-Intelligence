@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/model_config_v1.schema.json",
+  "title": "ModelConfig v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "model_config_id",
+    "model_family",
+    "architecture_id",
+    "architecture_version",
+    "parameter_dtype",
+    "architecture_parameters",
+    "task_heads"
+  ],
+  "properties": {
+    "schema": { "const": "model_config_v1" },
+    "version": { "const": "1" },
+    "model_config_id": { "type": "string", "minLength": 1 },
+    "model_family": { "type": "string", "minLength": 1 },
+    "architecture_id": { "type": "string", "minLength": 1 },
+    "architecture_version": { "type": "string", "minLength": 1 },
+    "parameter_dtype": { "const": "float32" },
+    "architecture_parameters": { "type": "object" },
+    "task_heads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["task", "head_id", "head_version", "output_dim"],
+        "properties": {
+          "task": { "type": "string", "minLength": 1 },
+          "head_id": { "type": "string", "minLength": 1 },
+          "head_version": { "type": "string", "minLength": 1 },
+          "output_dim": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}
