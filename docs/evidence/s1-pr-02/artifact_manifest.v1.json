@@ -1,0 +1,30 @@
+{
+  "schema": "artifact_manifest_v1",
+  "version": 1,
+  "artifacts": {
+    "config": {
+      "path": "config/fl_synthetic_smoke.v1.json",
+      "sha256": "b707e38fa098e41bf1a1f21e9f81b736f16fd18321a513af384e347e7d356202"
+    },
+    "entry_point": {
+      "path": "scripts/federated/fl_synthetic_smoke.py",
+      "sha256": "dacb31aab92429ba385584f52ff1a3773a68b71717956ed7163379596c6f0750"
+    },
+    "lifecycle_test": {
+      "path": "tests/federated/test_fl_synthetic_smoke.py",
+      "sha256": "0e039dcfe62110d524ac4d5f42852f7366e76642d6928f0bc6041ffc304ffbf2"
+    },
+    "documentation": {
+      "path": "docs/federated-synthetic-smoke.md",
+      "sha256": "bc47fff3e1d033959849542a70a7dcedddd35733254459348e1f3d8c0701b8f6"
+    },
+    "smoke_summary": {
+      "path": "docs/evidence/s1-pr-02/fl_synthetic_smoke_summary.v1.json",
+      "sha256": "b4876e958569ff98c5a5dbe55f3165f803100dd60eac0a950d52566e506b200d"
+    },
+    "environment_lock": {
+      "path": "uv.lock",
+      "sha256": "8143e1c5a2e764cc35be0367f65b640c1242a2722286a79a6b2d5c8627bf5180"
+    }
+  }
+}

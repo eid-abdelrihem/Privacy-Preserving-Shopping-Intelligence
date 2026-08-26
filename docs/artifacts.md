@@ -8,6 +8,12 @@
 | `TrainingEnvironmentSmoke` | `scripts/env_smoke.py` | v1 | S1-PR-01 | Developers, CI |
 | `TrainingEnvironmentDocs` | `docs/training-environment.md` | v1 | S1-PR-01 | Developers, CI |
 | `TrainingEnvironmentEvidence` | `docs/evidence/s1-pr-01/environment_validation.v1.json` | v1 | S1-PR-01 | Review / reproducibility evidence |
+| `FLSyntheticSmokeConfig` | `config/fl_synthetic_smoke.v1.json` | v1 | S1-PR-02 | S1-PR-05, CI |
+| `FLSyntheticSmokeEntryPoint` | `scripts/federated/fl_synthetic_smoke.py` | v1 | S1-PR-02 | S1-PR-05, CI |
+| `FLSyntheticSmokeSummary` | `docs/evidence/s1-pr-02/fl_synthetic_smoke_summary.v1.json` | v1 | S1-PR-02 | S1-PR-05, CI |
+| `FLSyntheticSmokeLifecycleTest` | `tests/federated/test_fl_synthetic_smoke.py` | v1 | S1-PR-02 | CI |
+| `FLSyntheticSmokeDocs` | `docs/federated-synthetic-smoke.md` | v1 | S1-PR-02 | Developers |
+| `FLSyntheticSmokeArtifactManifest` | `docs/evidence/s1-pr-02/artifact_manifest.v1.json` | v1 | S1-PR-02 | S1-PR-05 |
 
 ## Rules
 
