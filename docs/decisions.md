@@ -68,3 +68,40 @@ configuration, result identity, common initialization, and R1/R2A comparison.
 The technical freeze was approved for implementation under the project-owner
 decision process. The implementation PR still requires review and approval by
 another team member before merge.
+
+## S1-PR-05 — Unified Trainer Contract Freeze
+
+**Status:** Proposed for freeze. This decision becomes effective only when the
+S1-PR-05 implementation PR is approved by the required project members and
+merged. The implementation may be reviewed on the branch, but merge/closure
+must not claim unrecorded approval.
+
+The project freezes the following shared trainer decisions:
+
+- centralized and Flower execution use one `LocalTrainerCore`;
+- reusable code lives in the flat `ppsi/training/` package;
+- `Phase1Batch v1` uses named categorical channels, right padding, explicit
+  masks and optional zero-width continuous candidate features;
+- padding IDs are representation-declared; masks are authoritative;
+- empty history uses `ZERO_HIDDEN`: semantic length zero produces an exact
+  zero historical representation after history-only transformation;
+- `t3_present=true` requires at least one valid candidate;
+- missing task labels never become negatives;
+- raw outputs are T1 logits, T2 logit and T3 candidate scores with no embedded
+  activations or sorting;
+- objectives are injected and identified separately from shared trainer code;
+- no-contribution performs no backward, optimizer or scheduler step;
+- exact CPU resume uses a deterministic sampler, explicit next-batch cursor,
+  saved RNG state and `num_workers=0` in the P0 replay path;
+- Checkpoint v1 uses atomic trusted PyTorch persistence, byte-level integrity
+  SHA-256 and semantic compatibility identities;
+- Flower update weighting is an injected policy; the #18 contributing-row
+  policy is smoke-only and S1-PR-06 owns the final scientific policy;
+- run-level output reuses `ExperimentResult v1`;
+- `shared_trainer_core_sha256` is derived from a canonical manifest of the
+  behavior-defining shared trainer files, with UTF-8/LF/no-BOM text
+  normalization to avoid platform-specific line-ending drift.
+
+This freeze does not select the final GRU architecture, final T1/T2/T3
+objectives, final T3 candidate protocol, client sampling/weighting, FedAdam,
+personalization, authoritative final initialization, or real REES46 training.

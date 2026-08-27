@@ -1,0 +1,273 @@
+{
+  "environment": {
+    "flower": "1.33.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.14",
+    "ray": "2.55.1",
+    "torch": "2.13.0+cpu",
+    "uv_lock_sha256": "8143e1c5a2e764cc35be0367f65b640c1242a2722286a79a6b2d5c8627bf5180"
+  },
+  "identities": {
+    "config_sha256": "a924bc4607e159d7bdc158887253ca146fc852cc7eda34bd5820eaf65ed57f7a",
+    "git_sha": "97a75c4e3f30fa47c3148a1886d41dbccea299d7",
+    "input_fixture_sha256": "3e945b710f08cdf217810a7a5c5ab896bfef37a5ed308af977c24f73fed52868",
+    "objective_config_sha256": "62f81216e1859137e27736da62e48981e48eb4bb9c2110a5b4f4d5b8974a986f",
+    "shared_trainer_core_sha256": "66947261f8343d67b80b22d502406d161095a436511a6f9b65215347c64253b3"
+  },
+  "initialization": {
+    "artifact_kind": "FIXTURE_PROOF",
+    "model_config_sha256": "e530567dc537cf055e89ea0ecf24497c4930348a779490bcc9094f94d8f1a2f7",
+    "state_sha256": "52ff720092fffd8cf8652935f756b83e57724358604615b92dae1024705b66ec",
+    "state_size_bytes": 10370
+  },
+  "repetitions": [
+    {
+      "final_model_digest": "0a364dc65342dfb922fc4ccf9e6ba1791e33fd16cb36cfac4b344d9e0ef591ea",
+      "global_loss_history": [
+        [
+          0,
+          4.727602899074554
+        ],
+        [
+          1,
+          4.6636555353800455
+        ],
+        [
+          2,
+          4.602390225728353
+        ],
+        [
+          3,
+          4.543538129329681
+        ]
+      ],
+      "run": 0,
+      "selected_client_ids": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "tracing_log": [
+        {
+          "aggregated_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
+              "train_loss": 4.566711163520813,
+              "updated_digest": "cff904859fc8f7c018a43329e3047628a0f9a5b921e14c42e8d5fd3dac9ade9a"
+            },
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
+              "train_loss": 5.045395338535309,
+              "updated_digest": "08db585ff65457b22bde98065e6f00a6418aa7f5cc2034f610fea5dd973c4530"
+            }
+          ],
+          "redistribution_pass": false,
+          "round": 1,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3"
+        },
+        {
+          "aggregated_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.973978567123413,
+              "updated_digest": "4a56acee88c5dd1f0bba322b4b4b69d8011ff14d1b91278976413e652099efa1"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.506621805826823,
+              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
+            }
+          ],
+          "redistribution_pass": true,
+          "round": 2,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af"
+        },
+        {
+          "aggregated_digest": "0a364dc65342dfb922fc4ccf9e6ba1791e33fd16cb36cfac4b344d9e0ef591ea",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+              "train_loss": 4.9044071435928345,
+              "updated_digest": "2b7ebc530cba77696e0b3d7b3f4deb93c888146a5ff02441fc79c0dcd7fc0d18"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+              "train_loss": 4.449687413374583,
+              "updated_digest": "783cbb864d67fc0a339d38747fc24c6c7a2a515520bba1ae072612c7ae248055"
+            }
+          ],
+          "redistribution_pass": true,
+          "round": 3,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430"
+        }
+      ]
+    },
+    {
+      "final_model_digest": "0a364dc65342dfb922fc4ccf9e6ba1791e33fd16cb36cfac4b344d9e0ef591ea",
+      "global_loss_history": [
+        [
+          0,
+          4.727602899074554
+        ],
+        [
+          1,
+          4.6636555353800455
+        ],
+        [
+          2,
+          4.602390225728353
+        ],
+        [
+          3,
+          4.543538129329681
+        ]
+      ],
+      "run": 1,
+      "selected_client_ids": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "tracing_log": [
+        {
+          "aggregated_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
+              "train_loss": 4.566711163520813,
+              "updated_digest": "cff904859fc8f7c018a43329e3047628a0f9a5b921e14c42e8d5fd3dac9ade9a"
+            },
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
+              "train_loss": 5.045395338535309,
+              "updated_digest": "08db585ff65457b22bde98065e6f00a6418aa7f5cc2034f610fea5dd973c4530"
+            }
+          ],
+          "redistribution_pass": false,
+          "round": 1,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3"
+        },
+        {
+          "aggregated_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.506621805826823,
+              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
+            },
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.973978567123413,
+              "updated_digest": "4a56acee88c5dd1f0bba322b4b4b69d8011ff14d1b91278976413e652099efa1"
+            }
+          ],
+          "redistribution_pass": true,
+          "round": 2,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af"
+        },
+        {
+          "aggregated_digest": "0a364dc65342dfb922fc4ccf9e6ba1791e33fd16cb36cfac4b344d9e0ef591ea",
+          "aggregation_oracle_pass": true,
+          "clients": [
+            {
+              "logical_client_id": 0,
+              "num_examples": 2,
+              "received_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+              "train_loss": 4.9044071435928345,
+              "updated_digest": "2b7ebc530cba77696e0b3d7b3f4deb93c888146a5ff02441fc79c0dcd7fc0d18"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430",
+              "train_loss": 4.449687413374583,
+              "updated_digest": "783cbb864d67fc0a339d38747fc24c6c7a2a515520bba1ae072612c7ae248055"
+            }
+          ],
+          "redistribution_pass": true,
+          "round": 3,
+          "selected_client_count": 2,
+          "selected_logical_ids": [
+            0,
+            1
+          ],
+          "server_input_digest": "972d89b5c52d6cb6009d65c9bd1c4d1e4625b59f6380e3b390511ea10d92c430"
+        }
+      ]
+    }
+  ],
+  "schema": "unified_trainer_smoke_summary_v1",
+  "seed": 13,
+  "status": "PASS",
+  "version": "1"
+}
