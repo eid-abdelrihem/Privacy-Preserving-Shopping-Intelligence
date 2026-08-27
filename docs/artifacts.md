@@ -39,6 +39,7 @@
 | `ExperimentContractsDocs` | `docs/experiment-contracts.md` | v1 | S1-PR-03 | Developers |
 | `ExperimentContractsDecisionEntry` | `docs/decisions.md` (S1-PR-03 section) | v1 | S1-PR-03 | Developers |
 | `ExperimentContractsEvidence` | `docs/evidence/s1-pr-03/` | v1 | S1-PR-03 | S1-PR-05 |
+| `FederatedImplementationNotes` | `docs/papers-notes.md` | v1 | S1-PR-04 | Developers / research reference |
 
 ## Rules
 
