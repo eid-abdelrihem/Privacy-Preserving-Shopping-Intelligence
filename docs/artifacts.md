@@ -39,6 +39,20 @@
 | `ExperimentContractsDocs` | `docs/experiment-contracts.md` | v1 | S1-PR-03 | Developers |
 | `ExperimentContractsDecisionEntry` | `docs/decisions.md` (S1-PR-03 section) | v1 | S1-PR-03 | Developers |
 | `ExperimentContractsEvidence` | `docs/evidence/s1-pr-03/` | v1 | S1-PR-03 | S1-PR-05 |
+| `FederatedImplementationNotes` | `docs/papers-notes.md` | v1 | S1-PR-04 | Developers / research reference |
+| `Phase1BatchV1` | `ppsi/training/batch.py` | v1 | S1-PR-05 | S1-PR-07, S1-SE-08, S2-DS-01 |
+| `Phase1RawOutputV1` | `ppsi/training/outputs.py` | v1 | S1-PR-05 | S1-PR-07, S2-DS-01 |
+| `UnifiedTrainerCore` | `ppsi/training/core.py` | v1 | S1-PR-05 | R1/R2 adapters, S1-PR-07, S2-DS-01 |
+| `UnifiedTrainerCentralizedAdapter` | `ppsi/training/centralized.py` | v1 | S1-PR-05 | S2-DS-01 |
+| `UnifiedTrainerFlowerAdapter` | `ppsi/training/flower.py` | v1 | S1-PR-05 | S1-PR-07 |
+| `CheckpointV1` | `ppsi/training/checkpoint.py` | v1 | S1-PR-05 | S1-PR-07, S2-DS-01 |
+| `UnifiedTrainerSmokeConfig` | `config/unified_trainer_smoke.v1.json` | v1 | S1-PR-05 | CI / developers |
+| `UnifiedTrainerSmokeEntryPoint` | `scripts/training_smoke.py` | v1 | S1-PR-05 | CI / developers |
+| `UnifiedTrainerSmokeSummary` | `docs/evidence/s1-pr-05/unified_trainer_smoke_summary.v1.json` | v1 | S1-PR-05 | Review / CI |
+| `SharedTrainerCoreManifest` | `docs/evidence/s1-pr-05/shared_trainer_core_manifest.v1.json` | v1 | S1-PR-05 | ExperimentConfig compatibility |
+| `UnifiedTrainerArtifactManifest` | `docs/evidence/s1-pr-05/artifact_manifest.v1.json` | v1 | S1-PR-05 | Review / reproducibility |
+| `UnifiedTrainerDocs` | `docs/training-interface.md` | v1 | S1-PR-05 | Developers / downstream lanes |
+| `UnifiedTrainerContractTests` | `tests/training/` | v1 | S1-PR-05 | CI |
 
 ## Rules
 
