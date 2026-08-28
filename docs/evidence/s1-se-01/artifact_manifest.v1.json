@@ -1,0 +1,48 @@
+{
+  "schema": "repository_security_artifact_manifest_v1",
+  "version": 1,
+  "task_id": "S1-SE-01",
+  "generated_at_utc": "2026-08-27T23:14:47Z",
+  "source_commit": "440fd745144b3b28c443c3393ae1f080eaea4f07",
+  "hash_algorithm": "SHA-256",
+  "hash_scope": "UTF-8 text normalized to LF with no BOM",
+  "artifacts": {
+    "codeowners": {
+      "path": ".github/CODEOWNERS",
+      "sha256": "c43fec09aa793f117fa04ffcc92f938ffc3f434579269efcdec3781acbb913c5"
+    },
+    "security_policy": {
+      "path": ".github/SECURITY.md",
+      "sha256": "98e2f037714f302164a9570adc74633560544aee214346cc623685dcc6f4d89a"
+    },
+    "pull_request_template": {
+      "path": ".github/pull_request_template.md",
+      "sha256": "7617984faba940daed21aa3a56548041b48c50bde0eb3140344e651864101042"
+    },
+    "repository_ignore_baseline": {
+      "path": ".gitignore",
+      "sha256": "090439fe1d3709a508c2b226db097d9b9ca5a51dfef2afa3285a822f453eecaf"
+    },
+    "artifact_registry": {
+      "path": "docs/artifacts.md",
+      "sha256": "207ded0a1d3015de42741e2ffa12ece5fd506a2d5ad018ea512f570a7a42f036"
+    },
+    "secret_handling_policy": {
+      "path": "docs/security/secret-handling.md",
+      "sha256": "457c86773e77854293fa984fbdf5aad87ea8b937a645463ac84e669fb1b61474"
+    },
+    "repository_settings_policy_matrix": {
+      "path": "docs/evidence/s1-se-01/repository-settings-policy-matrix.v1.json",
+      "sha256": "58e01ed6568635db4f86fdf37a9951a5d66b7c1723f9809b908033ae5922dda8"
+    },
+    "repository_security_validator": {
+      "path": "scripts/validate_repository_security.py",
+      "sha256": "1e8bed1135595c1280229433ba7504e265345e8bcb72b8a8d34e007de4c37168"
+    },
+    "repository_security_validator_tests": {
+      "path": "tests/security/test_repository_security.py",
+      "sha256": "3e7905ff4bce30c1c97ce2bb09f067f135e3861977070df041781c83dd134e1e"
+    }
+  },
+  "self_hash_note": "The manifest cannot contain its own stable digest; record its committed SHA-256 in the PR evidence."
+}

@@ -1,0 +1,311 @@
+{
+  "schema": "repository_settings_policy_matrix_v1",
+  "version": 1,
+  "task_id": "S1-SE-01",
+  "retrieved_at_utc": "2026-08-27T22:51:48Z",
+  "repository": {
+    "name_with_owner": "eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence",
+    "visibility": "public",
+    "owner_type": "User",
+    "default_branch": "main",
+    "source_commit": "440fd745144b3b28c443c3393ae1f080eaea4f07"
+  },
+  "authenticated_read_back": {
+    "actor": "ahmedd-sherif",
+    "repository_permission": "write",
+    "viewer_can_administer": false,
+    "method": "Filtered GitHub REST and GraphQL read-back",
+    "scope_note": "Hidden admin-only settings are recorded as unverified, not inferred."
+  },
+  "redaction": {
+    "secret_material_included": false,
+    "authorization_headers_included": false,
+    "alert_details_included": false,
+    "email_addresses_included": false,
+    "private_numeric_identifiers_included": false,
+    "public_logins_retained_for_review_and_bypass_accountability": true
+  },
+  "collaborator_roles": [
+    {
+      "login": "eid-abdelrihem",
+      "role": "admin"
+    },
+    {
+      "login": "AhmedAbdelhamed01",
+      "role": "write"
+    },
+    {
+      "login": "ahmedd-sherif",
+      "role": "write"
+    }
+  ],
+  "inventory": {
+    "branch": {
+      "name": "main",
+      "protected": false,
+      "branch_protection_rule_count": 0,
+      "repository_ruleset_count": 0,
+      "applicable_rule_count": 0
+    },
+    "bypass": {
+      "configured_bypass_actors": [],
+      "effective_unrestricted_writers_while_no_rule_exists": [
+        "eid-abdelrihem",
+        "AhmedAbdelhamed01",
+        "ahmedd-sherif"
+      ],
+      "note": "No bypass list exists because no protection rule or ruleset exists."
+    },
+    "merge_methods": {
+      "merge_commit": true,
+      "squash": true,
+      "rebase": true,
+      "auto_merge": false,
+      "delete_branch_on_merge": false,
+      "allow_update_branch": false
+    },
+    "security": {
+      "dependency_vulnerability_alerts": "disabled",
+      "dependabot_security_updates": "unverified_write_role_404",
+      "private_vulnerability_reporting": "disabled",
+      "code_scanning": "no_analysis_found",
+      "codeql_default_setup": "unverified_write_role_403",
+      "repository_secret_scanning": "unverified_write_role_404",
+      "repository_push_protection": "unverified_write_role_404",
+      "actions_default_workflow_permissions": "unverified_write_role_403",
+      "public_partner_secret_scanning": "provided_by_github_for_public_repositories"
+    },
+    "review_history": {
+      "sample": "merged pull requests 58 through 64",
+      "review_count": 0,
+      "self_merge_observed": true,
+      "note": "This is workflow-risk evidence, not an allegation of malicious behavior."
+    }
+  },
+  "controls": [
+    {
+      "id": "branch.require_pull_request",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.required_approving_reviews",
+      "target": 1,
+      "observed": 0,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.dismiss_stale_reviews",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.require_code_owner_review",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.require_last_push_approval",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.require_conversation_resolution",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.enforce_for_admins",
+      "target": true,
+      "observed": false,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "branch.allow_force_pushes",
+      "target": false,
+      "observed": true,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true,
+      "note": "No active rule currently blocks force-push updates by a writer."
+    },
+    {
+      "id": "branch.allow_deletions",
+      "target": false,
+      "observed": true,
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true,
+      "note": "No active protection rule currently supplies a deletion control."
+    },
+    {
+      "id": "branch.required_status_checks",
+      "target": "deferred_until_s1_se_02_real_check",
+      "observed": [],
+      "status": "deferred_to_s1_se_02",
+      "enforcement": "do_not_require_a_nonexistent_check",
+      "owner_action_required": false,
+      "follow_up_issue": 22
+    },
+    {
+      "id": "security.secret_scanning",
+      "target": "enabled",
+      "observed": "unverified_write_role_404",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "security.push_protection",
+      "target": "enabled",
+      "observed": "unverified_write_role_404",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "security.dependency_alerts",
+      "target": "enabled",
+      "observed": "disabled",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "security.dependabot_security_updates",
+      "target": "enabled",
+      "observed": "unverified_write_role_404",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "security.private_vulnerability_reporting",
+      "target": "enabled",
+      "observed": "disabled",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "security.codeql_default_setup",
+      "target": "enabled_python_default_suite",
+      "observed": "no_analysis_found_and_admin_configuration_unverified",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true,
+      "note": "Do not require the CodeQL check before a real successful check run exists."
+    },
+    {
+      "id": "actions.default_workflow_permissions",
+      "target": "read",
+      "observed": "unverified_write_role_403",
+      "status": "pending_owner_action",
+      "enforcement": "github_native_when_owner_applies",
+      "owner_action_required": true
+    },
+    {
+      "id": "workflow.non_author_merge",
+      "target": true,
+      "observed": false,
+      "status": "procedural_pending_team_acceptance",
+      "enforcement": "documented_procedure_not_native_github_control",
+      "owner_action_required": false,
+      "team_approval_required": true,
+      "note": "GitHub can require another-member approval but cannot prevent the author from clicking Merge after approval."
+    }
+  ],
+  "owner_actions": {
+    "status": "pending",
+    "required_actor": "repository_owner_or_admin",
+    "responsible_login": "eid-abdelrihem",
+    "credential_handling": "Run on the owner's device; do not request or share the owner's token.",
+    "control_ids": [
+      "branch.require_pull_request",
+      "branch.required_approving_reviews",
+      "branch.dismiss_stale_reviews",
+      "branch.require_code_owner_review",
+      "branch.require_last_push_approval",
+      "branch.require_conversation_resolution",
+      "branch.enforce_for_admins",
+      "branch.allow_force_pushes",
+      "branch.allow_deletions",
+      "security.secret_scanning",
+      "security.push_protection",
+      "security.dependency_alerts",
+      "security.dependabot_security_updates",
+      "security.private_vulnerability_reporting",
+      "security.codeql_default_setup",
+      "actions.default_workflow_permissions"
+    ]
+  },
+  "documented_limitations": [
+    {
+      "id": "non_author_merge_identity",
+      "enforcement": "procedural",
+      "detail": "Another-member approval is enforceable, but GitHub has no native rule that requires the merger to differ from the PR author."
+    },
+    {
+      "id": "user_owned_push_restrictions",
+      "enforcement": "unavailable_for_current_repository_ownership",
+      "detail": "User/team branch push restrictions are not available as they are for eligible organization-owned repositories."
+    },
+    {
+      "id": "owner_can_change_settings",
+      "enforcement": "platform_trust_boundary",
+      "detail": "The personal repository owner can edit or remove repository rules and security settings."
+    },
+    {
+      "id": "admin_only_security_read_back",
+      "enforcement": "pending_owner_evidence",
+      "detail": "Secret Protection, CodeQL setup, and Actions defaults need filtered owner/admin read-back."
+    }
+  ],
+  "validation": {
+    "local_commands": [
+      "uv run --locked python scripts/validate_repository_security.py",
+      "uv run --locked pytest -q tests/security/test_repository_security.py",
+      "uv run --locked ruff check scripts/validate_repository_security.py tests/security/test_repository_security.py"
+    ],
+    "expected_exit_code": 0,
+    "expected_terminal_line": "REPOSITORY SECURITY VALIDATION: PASS",
+    "owner_read_back_commands": [
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/branches/main/protection",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/rulesets?includes_parents=true",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/rules/branches/main",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence --jq .security_and_analysis",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/private-vulnerability-reporting",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/code-scanning/default-setup",
+      "gh api repos/eid-abdelrihem/Privacy-Preserving-Shopping-Intelligence/actions/permissions/workflow"
+    ],
+    "read_back_rule": "Store only the filtered fields needed by this matrix; never persist raw headers, credentials, or alert payloads."
+  },
+  "completion_gate": {
+    "issue_may_be_marked_done": false,
+    "remaining": [
+      "Repository owner applies the pending GitHub settings.",
+      "Owner/admin supplies filtered authenticated read-back and the matrix is updated.",
+      "The implementation PR receives another-member approval.",
+      "A non-author merges the approved PR."
+    ]
+  }
+}
