@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://privacy-preserving-shopping-intelligence.local/product_hash_golden_vectors_v1.schema.json",
+  "title": "Product Hash Golden Vectors v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "hashing_config_uri",
+    "hashing_config_sha256",
+    "algorithm_self_tests",
+    "identity_vectors",
+    "reserved_vectors",
+    "known_bad"
+  ],
+  "properties": {
+    "schema": { "const": "product_hash_golden_vectors_v1" },
+    "version": { "const": "1" },
+    "hashing_config_uri": { "type": "string", "minLength": 1 },
+    "hashing_config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "algorithm_self_tests": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/algorithmVector" }
+    },
+    "identity_vectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/identityVector" }
+    },
+    "reserved_vectors": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/reservedVector" }
+    },
+    "known_bad": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/knownBad" }
+    }
+  },
+  "$defs": {
+    "algorithmVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "input_hex", "seed_uint64", "digest_hex", "digest_uint64"],
+      "properties": {
+        "case_id": { "type": "string", "minLength": 1 },
+        "input_hex": { "type": "string", "pattern": "^([0-9a-f]{2})*$" },
+        "seed_uint64": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" },
+        "digest_hex": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "digest_uint64": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" }
+      }
+    },
+    "identityVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "namespace",
+        "identifier",
+        "serialized_hex",
+        "digest_hex",
+        "digest_uint64",
+        "bucket_index"
+      ],
+      "properties": {
+        "case_id": { "type": "string", "minLength": 1 },
+        "namespace": { "type": "string", "minLength": 1 },
+        "identifier": { "type": "string", "minLength": 1 },
+        "serialized_hex": { "type": "string", "pattern": "^([0-9a-f]{2})+$" },
+        "digest_hex": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "digest_uint64": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" },
+        "bucket_index": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "reservedVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "input_kind", "hash_applied", "bucket_index"],
+      "properties": {
+        "case_id": { "type": "string", "minLength": 1 },
+        "input_kind": { "enum": ["PAD", "OOV", "NULL"] },
+        "hash_applied": { "const": false },
+        "bucket_index": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "knownBad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "operation", "error_code"],
+      "properties": {
+        "case_id": { "type": "string", "minLength": 1 },
+        "operation": { "type": "string", "minLength": 1 },
+        "error_code": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
