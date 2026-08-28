@@ -53,15 +53,6 @@
 | `UnifiedTrainerArtifactManifest` | `docs/evidence/s1-pr-05/artifact_manifest.v1.json` | v1 | S1-PR-05 | Review / reproducibility |
 | `UnifiedTrainerDocs` | `docs/training-interface.md` | v1 | S1-PR-05 | Developers / downstream lanes |
 | `UnifiedTrainerContractTests` | `tests/training/` | v1 | S1-PR-05 | CI |
-| `RepositoryPullRequestTemplate` | `.github/pull_request_template.md` | v1 | S1-SE-01 | All contributors, S1-SE-02 |
-| `RepositoryCodeOwners` | `.github/CODEOWNERS` | v1 | S1-SE-01 | All contributors, S1-SE-02 |
-| `RepositorySecurityPolicy` | `.github/SECURITY.md` | v1 | S1-SE-01 | Maintainers and security reporters |
-| `RepositorySecretHandlingPolicy` | `docs/security/secret-handling.md` | v1 | S1-SE-01 | S1-SE-02, S1-SE-03, all contributors |
-| `RepositoryProtectionPolicyMatrix` | `docs/evidence/s1-se-01/repository-settings-policy-matrix.v1.json` | v1 | S1-SE-01 | S1-SE-02, S1-SE-03, reviewers |
-| `RepositorySecurityValidator` | `scripts/validate_repository_security.py` | v1 | S1-SE-01 | Developers, CI |
-| `RepositorySecurityValidatorTests` | `tests/security/test_repository_security.py` | v1 | S1-SE-01 | Developers, CI |
-| `RepositorySecurityArtifactManifest` | `docs/evidence/s1-se-01/artifact_manifest.v1.json` | v1 | S1-SE-01 | S1-SE-02, S1-SE-03, reviewers |
-| `RepositoryIgnoreBaseline` | `.gitignore` | v1 | S1-SE-01 | S1-SE-03, all contributors |
 
 ## Rules
 
