@@ -53,17 +53,6 @@
 | `UnifiedTrainerArtifactManifest` | `docs/evidence/s1-pr-05/artifact_manifest.v1.json` | v1 | S1-PR-05 | Review / reproducibility |
 | `UnifiedTrainerDocs` | `docs/training-interface.md` | v1 | S1-PR-05 | Developers / downstream lanes |
 | `UnifiedTrainerContractTests` | `tests/training/` | v1 | S1-PR-05 | CI |
-| `HashingConfigV1Schema` | `config/features/schemas/hashing_config.v1.schema.json` | v1 | S1-SE-05 | S2-DS-01, S2-SE-03 |
-| `ProductHashGoldenVectorSchema` | `config/features/schemas/product_hash_golden_vectors.v1.schema.json` | v1 | S1-SE-05 | Cross-runtime consumers |
-| `ProductHashingModule` | `ppsi/features/hashing.py` | v1 | S1-SE-05 | S2-DS-01, S2-SE-03 |
-| `ProductHashConformanceConfig` | `fixtures/features/hashing_conformance_config.v1.json` | v1 | S1-SE-05 | CI / cross-runtime consumers |
-| `ProductHashGoldenVectors` | `fixtures/features/hashing_golden_vectors.v1.json` | v1 | S1-SE-05 | CI / runtime implementations |
-| `ProductHashCrossRuntimeVerifier` | `tests/features/cross_runtime/verify_hashing_vectors.mjs` | v1 | S1-SE-05 | CI / runtime implementations |
-| `ProductHashValidationEntryPoint` | `scripts/features/validate_hashing.py` | v1 | S1-SE-05 | CI / developers |
-| `ProductHashArtifactManifestGenerator` | `scripts/features/generate_hashing_artifact_manifest.py` | v1 | S1-SE-05 | CI / reviewers |
-| `ProductHashContractTests` | `tests/features/` | v1 | S1-SE-05 | CI |
-| `ProductHashDocs` | `docs/features/hashing.md` | v1 | S1-SE-05 | Developers / reviewers |
-| `ProductHashEvidence` | `docs/evidence/s1-se-05/artifact_manifest.v1.json` | v1 | S1-SE-05 | Review / reproducibility |
 
 ## Rules
 
