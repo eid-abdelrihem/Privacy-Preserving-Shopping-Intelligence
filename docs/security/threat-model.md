@@ -1,10 +1,10 @@
 # Phase 1 Threat Model and Privacy Boundary
 
-Status: Initial Phase 1 model  
-Scope: R1 centralized training, simulated R2A/FedAvg, repository/CI, and research artifacts  
-Source revision reviewed: 440fd745144b3b28c443c3393ae1f080eaea4f07  
-Owner: S1-SE-04  
-Required refresh: S2-SE-07 after the architecture and demo protocol are frozen
+- Status: Initial Phase 1 model
+- Scope: R1 centralized training, simulated R2A/FedAvg, repository/CI, and research artifacts
+- Source revision reviewed: 440fd745144b3b28c443c3393ae1f080eaea4f07
+- Owner: S1-SE-04
+- Required refresh: S2-SE-07 after the architecture and demo protocol are frozen
 
 This document describes security and privacy boundaries that the repository actually
 implements or explicitly plans. It is not a vulnerability report and does not claim that
