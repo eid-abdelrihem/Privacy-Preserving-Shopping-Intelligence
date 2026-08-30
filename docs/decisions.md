@@ -8,9 +8,9 @@ We will focus on completing the original technical stages W1–W4 during the cur
 
 Each member will keep one main workstream during Phase 1.
 
-- Ahmed: Data & Model
-- Eid: Federated Learning & Training
-- sherif: System, Deployment & Security
+- Eid: Data & Model
+- Ahmed Abdelhamed: Federated Training
+- Ahmed Sherif: System, Deployment & Security
 
 There will be no role rotation during the current two-week Phase 1 sprint to reduce context switching and move faster.
 
@@ -24,11 +24,10 @@ If a task is blocked, the member should move to another ready task in the same w
 
 ## GitHub Workflow
 
-Issue → Branch → Pull Request → Review → Merge → Done
+Issue → Branch → Pull Request → Validation → Merge → Done
 
-Every Pull Request must be reviewed and approved by at least one other team member.
-
-No one should merge their own Pull Request without approval from another team member.
+Pull Requests do not require another-member approval. The author may merge after the required
+tests pass. Review remains optional for scientific protocol changes and shared cross-lane contracts.
 
 ## Blocked Tasks
 
@@ -48,6 +47,9 @@ The member should move to another ready task whenever possible instead of waitin
 We will follow the "Assemble, Don't Build" principle.
 
 We will use established tools for standard infrastructure whenever possible and focus our implementation effort on the research-specific parts of the project.
+
+Issue descriptions define the intended outcome, not mandatory internal architecture. Use the
+smallest useful implementation that preserves shared contracts and can be extended later.
 
 
 ## S1-PR-03 — Experiment Contract Freeze
