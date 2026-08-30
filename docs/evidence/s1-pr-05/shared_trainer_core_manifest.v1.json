@@ -2,15 +2,15 @@
   "files": [
     {
       "path": "ppsi/training/batch.py",
-      "sha256": "4ffdbb1f3460e59d8da71979a9bee08e9020bec933711c6d8bb8443978a3d075"
+      "sha256": "dc9701e1e19d639faf04fd0e656ffad8a58530d3a79b0ce0eaa28a710cb621f9"
     },
     {
       "path": "ppsi/training/core.py",
-      "sha256": "8f6aa8e6e4c94c092f16ec5fe8ca4340ba2e536e73538369f4e1ff1ed0dc0144"
+      "sha256": "2dddd8c3d3d97d145da6d2bcd46972af37041635b010bbcee8c7edc492db9096"
     },
     {
       "path": "ppsi/training/identity.py",
-      "sha256": "b2e556eb22d50eb55591165da08dc767a30d1138f1196f041505e9fea42137cd"
+      "sha256": "4a24cfdc96c6fe099311385ed74696d02c604ee42768081f15eafa3d92e7d113"
     },
     {
       "path": "ppsi/training/outputs.py",
@@ -26,7 +26,7 @@
     }
   ],
   "schema": "shared_trainer_core_manifest_v1",
-  "sha256": "66947261f8343d67b80b22d502406d161095a436511a6f9b65215347c64253b3",
+  "sha256": "8b03e02d27e7be3e42354d62eb7fb3d3261d323bb279046ec99e72e312f6d501",
   "text_normalization": "UTF8_LF_NO_BOM",
   "version": "1"
 }
