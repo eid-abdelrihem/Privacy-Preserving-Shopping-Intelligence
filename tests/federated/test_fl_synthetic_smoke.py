@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import torch
 
+from ppsi.training.identity import file_sha256
 from scripts.federated.fl_synthetic_smoke import (
     SmokeValidationError,
     validate_config,
@@ -194,11 +195,9 @@ def test_c10_invalid_summary_schema_version():
 
 
 def check_manifest(manifest: dict):
-    import hashlib
-
     for k, v in manifest["artifacts"].items():
         p = Path(v["path"])
-        actual = hashlib.sha256(p.read_bytes()).hexdigest()
+        actual = file_sha256(p)
         if actual != v["sha256"]:
             raise SmokeValidationError(f"Hash mismatch for {k}")
 

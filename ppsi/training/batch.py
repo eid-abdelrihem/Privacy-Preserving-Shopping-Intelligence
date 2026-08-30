@@ -371,9 +371,20 @@ def validate_canonical_phase1_batch(batch: Phase1Batch, spec: Phase1BatchSpec) -
     history_padding = ~batch.history_mask
     for channel in spec.history_categorical:
         values = batch.history_categorical_ids[channel.name]
+        if batch.history_mask.any() and torch.any(values[batch.history_mask] == channel.pad_id):
+            raise BatchValidationError(
+                f"history_categorical_ids.{channel.name}: pad ID is not valid data"
+            )
         if history_padding.any() and not torch.all(values[history_padding] == channel.pad_id):
             raise BatchValidationError(
                 f"history_categorical_ids.{channel.name}: non-canonical padding value"
+            )
+
+    for channel in spec.query_categorical:
+        values = batch.query_categorical_ids[channel.name]
+        if torch.any(values == channel.pad_id):
+            raise BatchValidationError(
+                f"query_categorical_ids.{channel.name}: pad ID is not valid data"
             )
     if batch.history_continuous_features.numel() > 0:
         expanded = history_padding.unsqueeze(-1).expand_as(batch.history_continuous_features)
@@ -383,12 +394,22 @@ def validate_canonical_phase1_batch(batch: Phase1Batch, spec: Phase1BatchSpec) -
             )
 
     candidate_padding = ~batch.candidate_mask
+    if batch.candidate_mask.any() and torch.any(
+        batch.candidate_ids[batch.candidate_mask] == spec.candidate_id_pad_id
+    ):
+        raise BatchValidationError("candidate_ids: pad ID is not valid data")
     if candidate_padding.any() and not torch.all(
         batch.candidate_ids[candidate_padding] == spec.candidate_id_pad_id
     ):
         raise BatchValidationError("candidate_ids: non-canonical padding value")
     for channel in spec.candidate_categorical:
         values = batch.candidate_categorical_ids[channel.name]
+        if batch.candidate_mask.any() and torch.any(
+            values[batch.candidate_mask] == channel.pad_id
+        ):
+            raise BatchValidationError(
+                f"candidate_categorical_ids.{channel.name}: pad ID is not valid data"
+            )
         if candidate_padding.any() and not torch.all(values[candidate_padding] == channel.pad_id):
             raise BatchValidationError(
                 f"candidate_categorical_ids.{channel.name}: non-canonical padding value"

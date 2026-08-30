@@ -1,12 +1,17 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
+from copy import deepcopy
 from pathlib import Path
+
+import pytest
 
 from ppsi.training.identity import (
     DEFAULT_TRAINER_CORE_FILES,
     build_trainer_core_manifest,
+    canonical_manifest_bytes,
     verify_trainer_core_manifest,
 )
 from ppsi.training.result import build_experiment_result, make_metric_record
@@ -93,3 +98,19 @@ def test_trainer_core_manifest_changes_only_for_behavior_bundle(tmp_path: Path):
     )
     after_behavior = build_trainer_core_manifest(tmp_path)
     assert after_behavior["sha256"] != before["sha256"]
+
+
+def test_trainer_core_manifest_requires_exact_file_set(tmp_path: Path):
+    repo_root = Path(__file__).resolve().parents[2]
+    for relative in DEFAULT_TRAINER_CORE_FILES:
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(repo_root / relative, destination)
+
+    manifest = build_trainer_core_manifest(tmp_path)
+    missing = deepcopy(manifest)
+    missing["files"] = missing["files"][:-1]
+    missing_without_sha = {key: value for key, value in missing.items() if key != "sha256"}
+    missing["sha256"] = hashlib.sha256(canonical_manifest_bytes(missing_without_sha)).hexdigest()
+    with pytest.raises(ValueError, match="file set does not match"):
+        verify_trainer_core_manifest(tmp_path, missing)

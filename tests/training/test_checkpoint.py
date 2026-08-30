@@ -3,6 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 
+import numpy as np
 import pytest
 import torch
 
@@ -127,13 +128,11 @@ def test_checkpoint_exact_next_batch_and_next_step_replay(tmp_path: Path):
         expected_sha256=artifact.sha256,
         expected_identity=_identity(),
         expected_loader_contract=contract,
-        model=restored.model,
-        optimizer=restored.optimizer,
-        scheduler=restored.scheduler,
+        core=restored,
         grad_scaler=None,
         map_location="cpu",
     )
-    restored.optimizer_step_count = loaded.cursor.optimizer_step
+    assert restored.optimizer_step_count == loaded.cursor.optimizer_step == 1
     resumed_index = next(
         iter(
             DeterministicBatchSampler(
@@ -177,9 +176,7 @@ def test_hash_and_identity_mismatch_fail_before_resume(tmp_path: Path):
             expected_sha256="0" * 64,
             expected_identity=_identity(),
             expected_loader_contract=contract,
-            model=core.model,
-            optimizer=core.optimizer,
-            scheduler=core.scheduler,
+            core=core,
             grad_scaler=None,
         )
 
@@ -189,9 +186,7 @@ def test_hash_and_identity_mismatch_fail_before_resume(tmp_path: Path):
             expected_sha256=artifact.sha256,
             expected_identity=_identity("0"),
             expected_loader_contract=contract,
-            model=core.model,
-            optimizer=core.optimizer,
-            scheduler=core.scheduler,
+            core=core,
             grad_scaler=None,
         )
 
@@ -288,11 +283,59 @@ def test_cuda_rng_incompatibility_fails_before_model_mutation(tmp_path: Path, mo
             expected_sha256=artifact.sha256,
             expected_identity=_identity(),
             expected_loader_contract=_loader_contract(),
-            model=target.model,
-            optimizer=target.optimizer,
-            scheduler=target.scheduler,
+            core=target,
             grad_scaler=None,
             strict_cuda_rng=True,
         )
     for key, tensor in before.items():
         torch.testing.assert_close(tensor, target.model.state_dict()[key], rtol=0, atol=0)
+
+
+def test_late_checkpoint_failure_rolls_back_all_runtime_state(tmp_path: Path):
+    torch.manual_seed(13)
+    source = _make_core()
+    source.train_step(make_phase1_batch(seed=42))
+    payload = build_checkpoint_payload(
+        run_id="run-v1__r1__t1__c1__s13__cfgaaaaaaaaaaaa__a1",
+        attempt=1,
+        model=source.model,
+        optimizer=source.optimizer,
+        scheduler=source.scheduler,
+        grad_scaler=None,
+        cursor=TrainingCursor(None, 0, 1, source.optimizer_step_count),
+        best_criterion=None,
+        identity=_identity(),
+        loader_contract=_loader_contract(),
+        scheduler_step_unit="OPTIMIZER_STEP",
+    )
+    payload["optimizer_state_dict"]["param_groups"] = []
+    artifact = save_checkpoint(tmp_path / "late-failure.pt", payload)
+
+    target = _make_core()
+    target.optimizer_step_count = 7
+    before_model = deepcopy(target.model.state_dict())
+    before_optimizer = deepcopy(target.optimizer.state_dict())
+    before_scheduler = deepcopy(target.scheduler.state_dict())
+    before_rng = capture_rng_state()
+
+    with pytest.raises(CheckpointError, match="runtime state was restored"):
+        load_checkpoint(
+            artifact.path,
+            expected_sha256=artifact.sha256,
+            expected_identity=_identity(),
+            expected_loader_contract=_loader_contract(),
+            core=target,
+            grad_scaler=None,
+        )
+
+    _assert_nested_equal(before_model, target.model.state_dict())
+    _assert_nested_equal(before_optimizer, target.optimizer.state_dict())
+    _assert_nested_equal(before_scheduler, target.scheduler.state_dict())
+    assert target.optimizer_step_count == 7
+    after_rng = capture_rng_state()
+    assert before_rng["python"] == after_rng["python"]
+    assert before_rng["numpy"][0] == after_rng["numpy"][0]
+    np.testing.assert_array_equal(before_rng["numpy"][1], after_rng["numpy"][1])
+    assert before_rng["numpy"][2:] == after_rng["numpy"][2:]
+    torch.testing.assert_close(before_rng["torch_cpu"], after_rng["torch_cpu"], rtol=0, atol=0)
+    assert before_rng["torch_cuda"] == after_rng["torch_cuda"]

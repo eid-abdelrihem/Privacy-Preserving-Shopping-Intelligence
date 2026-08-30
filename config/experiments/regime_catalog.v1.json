@@ -3,27 +3,27 @@
   "version": "1",
   "regimes": {
     "R1": {
-      "description": "Fully centralized oracle baseline (upper bound)",
+      "description": "Centralized reference baseline",
       "orchestration_type": "CENTRALIZED"
     },
     "R2A": {
-      "description": "Independent models (lower bound)",
+      "description": "Standard federated averaging (FedAvg) baseline",
       "orchestration_type": "FEDAVG"
     },
     "R2B": {
-      "description": "Federated averaging with FedAdam",
+      "description": "Federated training with FedAdam server optimization",
       "orchestration_type": "FEDADAM"
     },
     "R3": {
-      "description": "Personalized-FL orchestration + local adapter identity",
+      "description": "Personalized federated learning",
       "orchestration_type": "PERSONALIZED_FL"
     },
     "R4": {
-      "description": "Strict-local orchestration",
+      "description": "Strict local-only training",
       "orchestration_type": "STRICT_LOCAL"
     },
     "R5": {
-      "description": "Local-adaptation orchestration",
+      "description": "Centralized-pretrained then local adaptation",
       "orchestration_type": "LOCAL_ADAPTATION"
     }
   }

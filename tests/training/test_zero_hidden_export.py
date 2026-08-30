@@ -5,7 +5,7 @@ from torch import nn
 
 
 class ZeroHiddenExportFixture(nn.Module):
-    """Graph-capture fixture for the approved ZERO_HIDDEN semantics."""
+    """Graph-capture fixture for the technically selected ZERO_HIDDEN semantics."""
 
     def forward(self, sequence_output: torch.Tensor, lengths: torch.Tensor) -> torch.Tensor:
         last_index = torch.clamp(lengths - 1, min=0)

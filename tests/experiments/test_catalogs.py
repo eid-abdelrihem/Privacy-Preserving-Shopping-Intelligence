@@ -24,6 +24,15 @@ class TestRegimeCatalog:
         result = validate_regime_catalog(data)
         expected_regimes = {"R1", "R2A", "R2B", "R3", "R4", "R5"}
         assert set(result["regimes"].keys()) == expected_regimes
+        assert result["regimes"]["R1"] == {
+            "description": "Centralized reference baseline",
+            "orchestration_type": "CENTRALIZED",
+        }
+        assert result["regimes"]["R2A"] == {
+            "description": "Standard federated averaging (FedAvg) baseline",
+            "orchestration_type": "FEDAVG",
+        }
+        assert result["regimes"]["R4"]["orchestration_type"] == "STRICT_LOCAL"
 
     def test_regime_catalog_rejects_unknown_fields(self) -> None:
         data = {

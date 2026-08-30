@@ -351,19 +351,9 @@ The document is valid only if all conditions hold:
 - no new formal dependency edge is created from S1-PR-04;
 - the artifact path and SHA-256 are recorded.
 
-Canonical read-only validation command:
-
-```powershell
-uv run --locked python scripts/docs/validate_papers_notes.py
-```
-
-Expected success:
-
-```text
-S1-PR-04 PAPERS NOTES: PASS
-```
-
-Any missing source identity, missing decision class, placeholder, or hash mismatch must exit nonzero.
+This documentation task has no standalone validator or generated evidence
+pipeline. Reviewers validate the checklist above directly against this file
+and the cited primary sources.
 
 ---
 

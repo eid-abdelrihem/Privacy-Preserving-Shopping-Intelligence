@@ -116,6 +116,44 @@ def test_runtime_validator_allows_finite_poisoned_padding_but_canonical_rejects(
         validate_canonical_phase1_batch(poisoned, batch_spec)
 
 
+def test_canonical_validator_rejects_pad_id_in_valid_history_position(
+    phase1_batch, batch_spec
+):
+    channels = dict(phase1_batch.history_categorical_ids)
+    channels["item_id"] = channels["item_id"].clone()
+    channels["item_id"][phase1_batch.history_mask] = batch_spec.history_categorical[0].pad_id
+    with pytest.raises(BatchValidationError, match="pad ID is not valid data"):
+        validate_canonical_phase1_batch(
+            replace(phase1_batch, history_categorical_ids=channels),
+            batch_spec,
+        )
+
+
+def test_canonical_validator_rejects_pad_id_in_valid_candidate_position(
+    phase1_batch, batch_spec
+):
+    candidate_ids = phase1_batch.candidate_ids.clone()
+    candidate_ids[phase1_batch.candidate_mask] = batch_spec.candidate_id_pad_id
+    with pytest.raises(BatchValidationError, match="pad ID is not valid data"):
+        validate_canonical_phase1_batch(
+            replace(phase1_batch, candidate_ids=candidate_ids),
+            batch_spec,
+        )
+
+
+def test_canonical_validator_rejects_pad_id_in_query_position(phase1_batch, batch_spec):
+    channels = dict(phase1_batch.query_categorical_ids)
+    channels["query_context_id"] = torch.full_like(
+        channels["query_context_id"],
+        batch_spec.query_categorical[0].pad_id,
+    )
+    with pytest.raises(BatchValidationError, match="pad ID is not valid data"):
+        validate_canonical_phase1_batch(
+            replace(phase1_batch, query_categorical_ids=channels),
+            batch_spec,
+        )
+
+
 def test_negative_categorical_or_candidate_ids_fail(phase1_batch, batch_spec):
     channels = dict(phase1_batch.history_categorical_ids)
     channels["item_id"] = channels["item_id"].clone()

@@ -7,6 +7,10 @@ import platform
 import sys
 from pathlib import Path
 
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
 import flwr
 import ray
 import torch
@@ -17,6 +21,8 @@ from flwr.serverapp import Grid, ServerApp
 from flwr.serverapp.strategy import FedAvg
 from flwr.simulation import run_simulation
 from torch import Tensor, nn, optim
+
+from ppsi.training.identity import file_sha256
 
 logger = logging.getLogger(__name__)
 
@@ -474,8 +480,7 @@ def main() -> None:
         config = load_config(args.config)
         logger.info("Configuration validated successfully.")
 
-        with open(args.config, "rb") as f:
-            config_hash = hashlib.sha256(f.read()).hexdigest()
+        config_hash = file_sha256(args.config)
 
         runtime_metadata = {
             "python_version": sys.version.split()[0],
@@ -541,7 +546,7 @@ def main() -> None:
 
         uv_lock_hash = ""
         if Path("uv.lock").exists():
-            uv_lock_hash = hashlib.sha256(Path("uv.lock").read_bytes()).hexdigest()
+            uv_lock_hash = file_sha256(Path("uv.lock"))
 
         summary = {
             "schema": "fl_synthetic_smoke_summary_v1",

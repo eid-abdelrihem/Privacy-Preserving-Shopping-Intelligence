@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib
 
+import pytest
 import ray
 import torch
 from flwr.app import ArrayRecord
@@ -20,7 +21,8 @@ from ppsi.training.flower import (
 from ppsi.training.objective import ContractSmokeObjective
 from ppsi.training.sampler import TrainingCursor
 from ppsi.training.state import load_shared_state, pack_shared_state
-from scripts.training_smoke import execute
+from scripts.federated.fl_synthetic_smoke import SmokeValidationError
+from scripts.training_smoke import execute, validate_config
 
 
 def _core(model):
@@ -108,8 +110,42 @@ def test_unified_trainer_runs_through_real_flower_three_round_lifecycle():
         }
     )
     assert summary["status"] == "PASS"
+    assert summary["identities"]["source_git_sha"]
+    assert summary["aggregation_parity"]["atol"] == 1e-6
+    assert summary["aggregation_parity"]["rtol"] == 0.0
+    assert 0 <= summary["aggregation_parity"]["max_abs_diff"] <= 1e-6
     assert len(summary["repetitions"]) == 2
     assert (
         summary["repetitions"][0]["final_model_digest"]
         == summary["repetitions"][1]["final_model_digest"]
     )
+
+
+def test_unified_trainer_smoke_v1_requires_exactly_two_clients():
+    config = {
+        "schema": "unified_trainer_smoke_v1",
+        "version": "1",
+        "seed": 13,
+        "num_clients": 3,
+        "num_rounds": 3,
+        "repeat_runs": 2,
+        "learning_rate": 0.01,
+        "tolerance": 1e-6,
+    }
+    with pytest.raises(SmokeValidationError, match="num_clients == 2"):
+        validate_config(config)
+
+
+def test_unified_trainer_smoke_v1_keeps_frozen_parity_tolerance():
+    config = {
+        "schema": "unified_trainer_smoke_v1",
+        "version": "1",
+        "seed": 13,
+        "num_clients": 2,
+        "num_rounds": 3,
+        "repeat_runs": 2,
+        "learning_rate": 0.01,
+        "tolerance": 1e-5,
+    }
+    with pytest.raises(SmokeValidationError, match="tolerance == 1e-6"):
+        validate_config(config)

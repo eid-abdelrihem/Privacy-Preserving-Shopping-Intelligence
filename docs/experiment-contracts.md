@@ -45,15 +45,17 @@ Unknown fields and unknown schema/version values are rejected.
 
 | Regime | Orchestration | Initialization |
 |---|---|---|
-| R1 | Centralized oracle (upper bound) | COMMON_INITIALIZATION |
-| R2A | FedAvg (lower bound) | COMMON_INITIALIZATION |
-| R2B | FedAdam | COMMON_INITIALIZATION |
-| R3 | Personalized FL (shared backbone + local adapters) | COMMON_INITIALIZATION |
-| R4 | Strict local training | COMMON_INITIALIZATION |
-| R5 | Local adaptation from pretrained R1 checkpoint | PRETRAINED_R1_CHECKPOINT |
+| R1 | Centralized reference baseline | COMMON_INITIALIZATION |
+| R2A | Standard FedAvg baseline | COMMON_INITIALIZATION |
+| R2B | FedAdam server optimization | COMMON_INITIALIZATION |
+| R3 | Personalized federated learning | COMMON_INITIALIZATION |
+| R4 | Strict local-only training | COMMON_INITIALIZATION |
+| R5 | Centralized-pretrained then local adaptation | PRETRAINED_R1_CHECKPOINT |
 
 R1–R4 share the same seed-specific untrained CommonInitialization.
 R5 starts from a trained R1 checkpoint and uses a separate initialization kind.
+R1 is a controlled centralized reference, not a guaranteed performance upper
+bound. R2A is standard federated averaging, not independent local training.
 
 ## Run-ID Grammar v1
 

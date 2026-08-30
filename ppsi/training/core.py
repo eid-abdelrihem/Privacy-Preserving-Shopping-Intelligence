@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 from typing import Any
 
@@ -62,10 +63,22 @@ class LocalTrainerCore:
         self.device = torch.device(device)
         self.model.to(self.device)
         self.optimizer_step_count = 0
+        self._initial_optimizer_state = copy.deepcopy(self.optimizer.state_dict())
+        self._initial_scheduler_state = (
+            None if self.scheduler is None else copy.deepcopy(self.scheduler.state_dict())
+        )
 
     @property
     def shared_state_spec(self) -> SharedStateSpec:
         return self.model.shared_state_spec()  # type: ignore[attr-defined]
+
+    def reset_optimizer_for_new_server_round(self) -> None:
+        """Reset client-local optimization state for a completed-round boundary."""
+
+        self.optimizer.load_state_dict(copy.deepcopy(self._initial_optimizer_state))
+        if self.scheduler is not None:
+            self.scheduler.load_state_dict(copy.deepcopy(self._initial_scheduler_state))
+        self.optimizer_step_count = 0
 
     def _validate_model_and_gradients(self) -> None:
         for name, parameter in self.model.named_parameters():

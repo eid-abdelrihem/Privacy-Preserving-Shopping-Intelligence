@@ -69,6 +69,8 @@ class FlowerFitResult:
 class FlowerLocalAdapter:
     """Parameter translation plus the same core used by centralized execution."""
 
+    optimizer_lifecycle = "RESET_EACH_SERVER_ROUND"
+
     def __init__(
         self,
         core: LocalTrainerCore,
@@ -89,6 +91,10 @@ class FlowerLocalAdapter:
         cursor: TrainingCursor | None = None,
     ) -> FlowerFitResult:
         received_digest = shared_state_digest(incoming_state)
+        if cursor is None:
+            self.core.reset_optimizer_for_new_server_round()
+        elif self.core.optimizer_step_count != cursor.optimizer_step:
+            raise ValueError("Flower cursor optimizer_step does not match restored trainer state")
         load_shared_state(self.core.model, incoming_state, self.shared_state_spec)
         start_cursor = cursor or TrainingCursor(
             outer_round=outer_round,
