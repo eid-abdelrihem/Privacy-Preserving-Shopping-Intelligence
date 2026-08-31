@@ -6,7 +6,11 @@
     },
     "checkpoint_v1": {
       "path": "ppsi/training/checkpoint.py",
-      "sha256": "88d9221e58de04a786be767f808fc01b11eeb2b69055071c4f2b30379d1911d4"
+      "sha256": "3b122f5e8ae8e29070928edf5cfec7f80d7739f61607e0348bf291d803b113a1"
+    },
+    "contract_smoke_fixtures": {
+      "path": "ppsi/training/fixtures.py",
+      "sha256": "00bd03670356f25a9a0ca82f3b924d59c2883e33f169a8d610a61cb45b3396c9"
     },
     "contract_smoke_objective": {
       "path": "ppsi/training/objective.py",
@@ -20,9 +24,13 @@
       "path": "ppsi/training/sampler.py",
       "sha256": "59fdd8ca033d278ee2b2e79aa07f2091d8abfbb50d65c84aab76f206745b80f1"
     },
+    "federated_smoke_runtime": {
+      "path": "scripts/federated/fl_synthetic_smoke.py",
+      "sha256": "d9a4c4af0bce162bba2b5f41293cdf841c6f92d83900161c125a9675f9a9d91a"
+    },
     "flower_adapter": {
       "path": "ppsi/training/flower.py",
-      "sha256": "bf16b6a93b3e4f93a428a68f91ad7b471054f6dda8a23d1c3a086102765785dc"
+      "sha256": "45db3cba20a9ae41132d916a53ffb9a4c8fb198420e7628d57310cf58eaf0737"
     },
     "phase1_batch_v1": {
       "path": "ppsi/training/batch.py",
@@ -42,7 +50,7 @@
     },
     "shared_trainer_core_manifest": {
       "path": "docs/evidence/s1-pr-05/shared_trainer_core_manifest.v1.json",
-      "sha256": "24298c3e72bd9f6085289476ba9cb270495e04588c6d59db09f8f405efc3a1a9"
+      "sha256": "42660ba16750ebb64afa1a13f82e93d1264c2529b053670c1ab73d11747b2e4d"
     },
     "stub_initialization_bridge": {
       "path": "ppsi/training/initialization.py",
@@ -50,7 +58,7 @@
     },
     "trainer_identity": {
       "path": "ppsi/training/identity.py",
-      "sha256": "4a24cfdc96c6fe099311385ed74696d02c604ee42768081f15eafa3d92e7d113"
+      "sha256": "4e1c8ec684908d2becb9adde4e21f8c1774a3dfbd39c01ca3996b2e03ce7fba3"
     },
     "trainer_result_bridge": {
       "path": "ppsi/training/result.py",
@@ -70,15 +78,15 @@
     },
     "unified_trainer_smoke_entrypoint": {
       "path": "scripts/training_smoke.py",
-      "sha256": "0850014f4addd5b496c654a2d8e57577ca76f5987123cf29b33a636399c742b9"
+      "sha256": "043e39f6e329a97448a21df12a48aa43722ed98a11315f8d1b06cbbc61666bc1"
     },
     "unified_trainer_smoke_summary": {
       "path": "docs/evidence/s1-pr-05/unified_trainer_smoke_summary.v1.json",
-      "sha256": "f40d44080a35e36747901bc6a35d758fd68c1fed492536cbfdf10db97477baa7"
+      "sha256": "ff3f83a2bcdf0e2541d98b037ecfab2f87c5e23adc31e5c6a610a64dbd1c9e24"
     },
     "unified_trainer_tests": {
       "path": "tests/training",
-      "sha256": "d8a259f704b680ec2ea00426d12c443dcbb7d95b57e6c161f074e9730c51df55"
+      "sha256": "3658896273a8a2eb8ae09a922bd42ecf04c536eafe602edc97928297f638c0cc"
     }
   },
   "schema": "unified_trainer_artifact_manifest_v1",

@@ -10,7 +10,7 @@
     },
     {
       "path": "ppsi/training/identity.py",
-      "sha256": "4a24cfdc96c6fe099311385ed74696d02c604ee42768081f15eafa3d92e7d113"
+      "sha256": "4e1c8ec684908d2becb9adde4e21f8c1774a3dfbd39c01ca3996b2e03ce7fba3"
     },
     {
       "path": "ppsi/training/outputs.py",
@@ -26,7 +26,7 @@
     }
   ],
   "schema": "shared_trainer_core_manifest_v1",
-  "sha256": "8b03e02d27e7be3e42354d62eb7fb3d3261d323bb279046ec99e72e312f6d501",
+  "sha256": "8cd66b22ab8349189e532e680e82551573ca6b689c5951c03e780180748226c7",
   "text_normalization": "UTF8_LF_NO_BOM",
   "version": "1"
 }

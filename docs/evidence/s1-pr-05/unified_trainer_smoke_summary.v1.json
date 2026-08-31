@@ -10,14 +10,14 @@
     "python": "3.11.14",
     "ray": "2.55.1",
     "torch": "2.13.0+cpu",
-    "uv_lock_sha256": "8143e1c5a2e764cc35be0367f65b640c1242a2722286a79a6b2d5c8627bf5180"
+    "uv_lock_sha256": "cd86bcdb34077eaedd3ccf84e8ddc52a6424271cfd35f27ba0b7f32d7cbdf0dd"
   },
   "identities": {
     "config_sha256": "a924bc4607e159d7bdc158887253ca146fc852cc7eda34bd5820eaf65ed57f7a",
     "input_fixture_sha256": "3e945b710f08cdf217810a7a5c5ab896bfef37a5ed308af977c24f73fed52868",
     "objective_config_sha256": "62f81216e1859137e27736da62e48981e48eb4bb9c2110a5b4f4d5b8974a986f",
-    "shared_trainer_core_sha256": "8b03e02d27e7be3e42354d62eb7fb3d3261d323bb279046ec99e72e312f6d501",
-    "source_git_sha": "5a9b351085ea96ac41adf0a9b7d04c64b2c2d653"
+    "shared_trainer_core_sha256": "8cd66b22ab8349189e532e680e82551573ca6b689c5951c03e780180748226c7",
+    "source_git_sha": "6fbfbe8eb7c037021cc8d0f0b45f0ecbc9686c72"
   },
   "initialization": {
     "artifact_kind": "FIXTURE_PROOF",
@@ -96,18 +96,18 @@
           "aggregation_oracle_pass": true,
           "clients": [
             {
-              "logical_client_id": 1,
-              "num_examples": 3,
-              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
-              "train_loss": 4.506621805826823,
-              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
-            },
-            {
               "logical_client_id": 0,
               "num_examples": 2,
               "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
               "train_loss": 4.973978567123413,
               "updated_digest": "4a56acee88c5dd1f0bba322b4b4b69d8011ff14d1b91278976413e652099efa1"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.506621805826823,
+              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
             }
           ],
           "max_abs_diff": 2.384185791015625e-07,
@@ -192,18 +192,18 @@
           "aggregation_oracle_pass": true,
           "clients": [
             {
-              "logical_client_id": 1,
-              "num_examples": 3,
-              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
-              "train_loss": 4.566711163520813,
-              "updated_digest": "cff904859fc8f7c018a43329e3047628a0f9a5b921e14c42e8d5fd3dac9ade9a"
-            },
-            {
               "logical_client_id": 0,
               "num_examples": 2,
               "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
               "train_loss": 5.045395338535309,
               "updated_digest": "08db585ff65457b22bde98065e6f00a6418aa7f5cc2034f610fea5dd973c4530"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "0c68abec8a1c9dc609c4f318190c3eb3f79124aa34251b9cf418752372cdc6a3",
+              "train_loss": 4.566711163520813,
+              "updated_digest": "cff904859fc8f7c018a43329e3047628a0f9a5b921e14c42e8d5fd3dac9ade9a"
             }
           ],
           "max_abs_diff": 2.384185791015625e-07,
@@ -221,18 +221,18 @@
           "aggregation_oracle_pass": true,
           "clients": [
             {
-              "logical_client_id": 1,
-              "num_examples": 3,
-              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
-              "train_loss": 4.506621805826823,
-              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
-            },
-            {
               "logical_client_id": 0,
               "num_examples": 2,
               "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
               "train_loss": 4.973978567123413,
               "updated_digest": "4a56acee88c5dd1f0bba322b4b4b69d8011ff14d1b91278976413e652099efa1"
+            },
+            {
+              "logical_client_id": 1,
+              "num_examples": 3,
+              "received_digest": "4dc6f4b1f21e54883ce37a6f6ee6d69698f04b61b80609f5de1e72b907fd73af",
+              "train_loss": 4.506621805826823,
+              "updated_digest": "6ef9cfa90cb70f41ec3041942501edcbdc75f164750b9a4e9f6780cd33e8daa2"
             }
           ],
           "max_abs_diff": 2.384185791015625e-07,
