@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.11.12"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install locked environment
+        run: |
+          uv python install
+          uv sync --locked --group dev
+
+      - name: Lint
+        run: uv run --locked ruff check ppsi scripts tests
+
+      - name: Test
+        run: uv run --locked python -m pytest -q
+
+      - name: Environment smoke
+        run: uv run --locked python scripts/env_smoke.py
+
+      - name: Contract smoke
+        run: uv run --locked python -X utf8 scripts/experiments/validate_experiment_contracts.py

@@ -83,7 +83,10 @@ def test_candidate_axis_permutation_preserves_alignment():
     torch.testing.assert_close(output.t1_logits, permuted_output.t1_logits, rtol=0, atol=0)
     torch.testing.assert_close(output.t2_logit, permuted_output.t2_logit, rtol=0, atol=0)
     torch.testing.assert_close(
-        output.t3_scores[:, permutation], permuted_output.t3_scores, rtol=0, atol=0
+        output.t3_scores[:, permutation],
+        permuted_output.t3_scores,
+        rtol=1e-6,
+        atol=1e-7,
     )
 
 

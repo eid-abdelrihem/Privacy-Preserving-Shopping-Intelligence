@@ -15,14 +15,13 @@ import tempfile
 import time
 from collections import Counter
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import polars as pl
 import psutil
 import pyarrow
 import pyarrow.parquet as pq
-
 
 # 1) الـschema الثابت وقواعد الرفض
 EXPECTED_COLUMNS = [
@@ -332,7 +331,7 @@ def make_report(stats: Stats, config: dict, status: str, started: str, duration:
         "deterministic_order": config["deterministic_tie_key"],
         "batches": stats.batches, "parquet_files": 1 if stats.accepted_rows else 0,
         "duration_seconds": round(duration, 3), "peak_rss_bytes": stats.peak_rss_bytes,
-        "started_utc": started, "finished_utc": datetime.now(timezone.utc).isoformat(),
+        "started_utc": started, "finished_utc": datetime.now(UTC).isoformat(),
     }
 
 
@@ -374,7 +373,7 @@ def convert(config_path: Path) -> dict:
     config, workspace = load_config(config_path)
     source = verify_input(config, workspace)
     output, staging = prepare_output(config, workspace)
-    started, clock = datetime.now(timezone.utc).isoformat(), time.perf_counter()
+    started, clock = datetime.now(UTC).isoformat(), time.perf_counter()
     try:
         stats = process_csv(source, staging, config)
     except Exception as error:
