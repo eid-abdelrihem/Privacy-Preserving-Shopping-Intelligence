@@ -56,7 +56,7 @@
     },
     "ExperimentContractsDecisionEntry": {
       "path": "docs/decisions.md",
-      "sha256": "d5e73355c9a9ea88fc84d7e46eb0302b73d9f3b5084ae3b005b5a2917cb10e3d"
+      "sha256": "d79494ed7e48bfe4ceebc4473f1609985d79eca22cdc480a461ee9b838c7030b"
     },
     "ExperimentContractsDocs": {
       "path": "docs/experiment-contracts.md",

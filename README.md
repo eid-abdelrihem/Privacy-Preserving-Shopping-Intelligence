@@ -48,3 +48,18 @@ SMOKE STATUS: PASS
 Full setup, VS Code, CPU/GPU, and compatibility documentation:
 
 [`docs/training-environment.md`](docs/training-environment.md)
+
+## Local CI checks
+
+Pull requests and pushes to `main` run one CI workflow. Run the same checks locally with:
+
+```powershell
+uv sync --locked --group dev
+uv run --locked ruff check ppsi scripts tests
+uv run --locked python -m pytest -q
+uv run --locked python scripts/env_smoke.py
+uv run --locked python -X utf8 scripts/experiments/validate_experiment_contracts.py
+```
+
+The workflow uses synthetic and committed fixtures only. It does not download REES46 or require a
+GPU.
