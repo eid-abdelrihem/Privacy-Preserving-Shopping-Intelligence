@@ -454,3 +454,17 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
+
+# Secrets and machine-local credentials
+.env
+.env.*
+!.env.example
+.secrets/
+*.pem
+*.key
+*.p12
+credentials.json
+credentials.*.json
+service-account*.json
+.netrc
+.pypirc
