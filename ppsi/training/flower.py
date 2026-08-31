@@ -17,6 +17,7 @@ from ppsi.training.state import (
     load_shared_state,
     pack_shared_state,
     shared_state_digest,
+    validate_packed_shared_state,
 )
 
 
@@ -90,22 +91,24 @@ class FlowerLocalAdapter:
         local_epoch: int = 0,
         cursor: TrainingCursor | None = None,
     ) -> FlowerFitResult:
+        validate_packed_shared_state(incoming_state, self.shared_state_spec)
         received_digest = shared_state_digest(incoming_state)
-        if cursor is None:
-            self.core.reset_optimizer_for_new_server_round()
-        elif self.core.optimizer_step_count != cursor.optimizer_step:
-            raise ValueError("Flower cursor optimizer_step does not match restored trainer state")
-        load_shared_state(self.core.model, incoming_state, self.shared_state_spec)
         start_cursor = cursor or TrainingCursor(
             outer_round=outer_round,
             local_epoch=local_epoch,
             next_batch_index=0,
-            optimizer_step=self.core.optimizer_step_count,
+            optimizer_step=0,
         )
         if start_cursor.outer_round not in {None, outer_round}:
             raise ValueError("Flower cursor outer_round does not match fit round")
         if start_cursor.local_epoch != local_epoch:
             raise ValueError("Flower cursor local_epoch does not match fit epoch")
+
+        if cursor is None:
+            self.core.reset_optimizer_for_new_server_round()
+            load_shared_state(self.core.model, incoming_state, self.shared_state_spec)
+        elif self.core.optimizer_step_count != cursor.optimizer_step:
+            raise ValueError("Flower cursor optimizer_step does not match restored trainer state")
         summaries = [self.core.train_step(batch) for batch in batches]
         final_cursor = TrainingCursor(
             outer_round=outer_round,

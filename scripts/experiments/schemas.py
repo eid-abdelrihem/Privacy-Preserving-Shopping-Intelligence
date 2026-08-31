@@ -49,6 +49,15 @@ _MODEL_CONFIG_FIELDS: frozenset[str] = frozenset(
 
 _TASK_HEAD_FIELDS: frozenset[str] = frozenset({"task", "head_id", "head_version", "output_dim"})
 
+_REGIME_ORCHESTRATION_TYPES: dict[str, str] = {
+    "R1": "CENTRALIZED",
+    "R2A": "FEDAVG",
+    "R2B": "FEDADAM",
+    "R3": "PERSONALIZED_FL",
+    "R4": "STRICT_LOCAL",
+    "R5": "LOCAL_ADAPTATION",
+}
+
 
 # ---------------------------------------------------------------------------
 # Architecture Validators
@@ -491,6 +500,35 @@ def validate_regime_catalog(record: Any) -> dict[str, Any]:
     regimes = record.get("regimes")
     if not isinstance(regimes, dict):
         raise ContractValidationError("regimes must be dict")
+
+    expected_ids = set(_REGIME_ORCHESTRATION_TYPES)
+    actual_ids = set(regimes)
+    if actual_ids != expected_ids:
+        missing = sorted(expected_ids - actual_ids)
+        unknown = sorted(actual_ids - expected_ids)
+        raise ContractValidationError(
+            f"regimes must contain the frozen v1 set: missing={missing}, unknown={unknown}"
+        )
+
+    for regime_id, expected_orchestration in _REGIME_ORCHESTRATION_TYPES.items():
+        regime = regimes[regime_id]
+        if not isinstance(regime, dict):
+            raise ContractValidationError(f"regimes[{regime_id}] must be dict")
+        reject_unknown_fields(
+            regime,
+            {"description", "orchestration_type"},
+            f"regimes[{regime_id}]",
+        )
+        strict_nonempty_string(regime.get("description"), f"regimes[{regime_id}].description")
+        orchestration = strict_nonempty_string(
+            regime.get("orchestration_type"),
+            f"regimes[{regime_id}].orchestration_type",
+        )
+        if orchestration != expected_orchestration:
+            raise ContractValidationError(
+                f"regimes[{regime_id}].orchestration_type must be "
+                f"{expected_orchestration}, got {orchestration}"
+            )
     return record
 
 

@@ -1,7 +1,34 @@
 {
   "schema": "experiment_contract_validation_summary_v1",
   "version": "1",
-  "validated_contract_count": 22,
-  "all_passed": true,
-  "validation_environment": "pytest/canonical-validation"
+  "status": "PASS",
+  "timestamp_utc": "2026-08-30T23:50:03Z",
+  "validated_schemas": [
+    "artifact_ref_v1",
+    "common_initialization_v1",
+    "comparison_compatibility_v1",
+    "experiment_artifact_map_v1",
+    "experiment_config_v1",
+    "experiment_contract_artifact_manifest_v1",
+    "experiment_contract_freeze_v1",
+    "experiment_contract_validation_summary_v1",
+    "experiment_result_v1",
+    "metric_record_v1",
+    "model_config_v1",
+    "regime_catalog_v1",
+    "system_measurement_reference_set_v1"
+  ],
+  "validated_fixtures": [
+    "config/experiments/contract_freeze.v1.json",
+    "config/experiments/experiment_artifact_map.v1.json",
+    "config/experiments/regime_catalog.v1.json",
+    "docs/evidence/s1-pr-03/experiment_contract_artifact_manifest.v1.json",
+    "docs/evidence/s1-pr-03/experiment_contract_validation_summary.v1.json",
+    "fixtures/experiments/contracts/common_initialization.json",
+    "fixtures/experiments/contracts/experiment_config_r1.json",
+    "fixtures/experiments/contracts/experiment_result.json",
+    "fixtures/experiments/contracts/metric_record.json",
+    "fixtures/experiments/contracts/model_config.json",
+    "fixtures/experiments/contracts/sys_measurement.json"
+  ]
 }

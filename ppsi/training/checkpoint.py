@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import math
 import os
 import random
 import re
@@ -123,8 +124,18 @@ def build_checkpoint_payload(
     loader_contract: LoaderContract,
     scheduler_step_unit: str,
 ) -> dict[str, Any]:
-    if attempt < 1:
-        raise ValueError("attempt must be >= 1")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be a non-empty string")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        raise ValueError("attempt must be an integer >= 1")
+    if best_criterion is not None:
+        if (
+            isinstance(best_criterion, bool)
+            or not isinstance(best_criterion, (int, float))
+            or not math.isfinite(float(best_criterion))
+        ):
+            raise ValueError("best_criterion must be finite or None")
+        best_criterion = float(best_criterion)
     if scheduler_step_unit != "OPTIMIZER_STEP":
         raise ValueError("Unsupported scheduler step unit")
     return {
@@ -286,15 +297,36 @@ def load_checkpoint(
 
     _validate_model_state(core.model, payload["model_state_dict"])
     cursor = TrainingCursor.from_dict(payload["cursor"])
+    run_id = payload.get("run_id")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise CheckpointError("Checkpoint run_id must be a non-empty string")
+    attempt = payload.get("attempt")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        raise CheckpointError("Checkpoint attempt must be an integer >= 1")
+    if "best_criterion" not in payload:
+        raise CheckpointError("Checkpoint best_criterion is missing")
+    best_criterion = payload["best_criterion"]
+    if best_criterion is not None:
+        if (
+            isinstance(best_criterion, bool)
+            or not isinstance(best_criterion, (int, float))
+            or not math.isfinite(float(best_criterion))
+        ):
+            raise CheckpointError("Checkpoint best_criterion must be finite or None")
+        best_criterion = float(best_criterion)
+    loaded = LoadedCheckpoint(
+        cursor=cursor,
+        best_criterion=best_criterion,
+        run_id=run_id,
+        attempt=attempt,
+    )
     snapshot = {
         "model": {key: value.detach().clone() for key, value in core.model.state_dict().items()},
         "optimizer": copy.deepcopy(core.optimizer.state_dict()),
         "scheduler": (
             None if core.scheduler is None else copy.deepcopy(core.scheduler.state_dict())
         ),
-        "grad_scaler": (
-            None if grad_scaler is None else copy.deepcopy(grad_scaler.state_dict())
-        ),
+        "grad_scaler": (None if grad_scaler is None else copy.deepcopy(grad_scaler.state_dict())),
         "optimizer_step_count": core.optimizer_step_count,
         "rng": capture_rng_state(),
     }
@@ -326,9 +358,4 @@ def load_checkpoint(
             "Checkpoint state application failed; runtime state was restored"
         ) from exc
 
-    return LoadedCheckpoint(
-        cursor=cursor,
-        best_criterion=payload["best_criterion"],
-        run_id=str(payload["run_id"]),
-        attempt=int(payload["attempt"]),
-    )
+    return loaded

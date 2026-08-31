@@ -17,6 +17,7 @@ DEFAULT_TRAINER_CORE_FILES: tuple[str, ...] = (
 )
 
 _TEXT_SUFFIXES = frozenset({".py", ".md", ".json", ".toml", ".txt", ".yaml", ".yml"})
+_TEXT_FILENAMES = frozenset({"uv.lock"})
 
 
 def canonical_file_bytes(path: Path) -> bytes:
@@ -28,7 +29,7 @@ def canonical_file_bytes(path: Path) -> bytes:
     """
 
     data = path.read_bytes()
-    if path.suffix.lower() not in _TEXT_SUFFIXES:
+    if path.name not in _TEXT_FILENAMES and path.suffix.lower() not in _TEXT_SUFFIXES:
         return data
     text = data.decode("utf-8-sig")
     return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")

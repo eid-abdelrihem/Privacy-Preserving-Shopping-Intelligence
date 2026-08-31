@@ -39,7 +39,7 @@ from ppsi.training.flower import (
     ContributingRowsSmokeWeightPolicy,
     FlowerLocalAdapter,
 )
-from ppsi.training.identity import build_trainer_core_manifest
+from ppsi.training.identity import build_trainer_core_manifest, file_sha256
 from ppsi.training.initialization import (
     generate_stub_initialization_fixture,
     load_verified_stub_initialization,
@@ -321,13 +321,13 @@ def validate_source_git_sha(source_git_sha: str, *, require_clean_head: bool) ->
         if source_git_sha != _git_sha():
             raise SmokeValidationError("source_git_sha must equal the current HEAD")
         status = subprocess.check_output(
-            ["git", "status", "--porcelain", "--untracked-files=no"],
+            ["git", "status", "--porcelain", "--untracked-files=all"],
             cwd=REPO_ROOT,
             text=True,
             encoding="utf-8",
         ).strip()
         if status:
-            raise SmokeValidationError("Canonical evidence requires a clean tracked working tree")
+            raise SmokeValidationError("Canonical evidence requires a clean working tree")
     return source_git_sha
 
 
@@ -420,7 +420,7 @@ def execute(config: dict, *, source_git_sha: str | None = None) -> dict:
             "flower": flwr.__version__,
             "ray": ray.__version__,
             "platform": platform.platform(),
-            "uv_lock_sha256": hashlib.sha256((REPO_ROOT / "uv.lock").read_bytes()).hexdigest(),
+            "uv_lock_sha256": file_sha256(REPO_ROOT / "uv.lock"),
         },
         "repetitions": repetitions,
     }

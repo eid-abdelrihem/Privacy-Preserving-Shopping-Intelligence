@@ -20,11 +20,11 @@
     },
     "smoke_summary": {
       "path": "docs/evidence/s1-pr-02/fl_synthetic_smoke_summary.v1.json",
-      "sha256": "afe1fbd9c99a681b1735a52c49a15dd3e3e6441a0845da73d6553868ed00ed9d"
+      "sha256": "5a53a640ae45952f0233b08b5814703f9d28b023f17889946dd7853871dd82fd"
     },
     "environment_lock": {
       "path": "uv.lock",
-      "sha256": "8143e1c5a2e764cc35be0367f65b640c1242a2722286a79a6b2d5c8627bf5180"
+      "sha256": "cd86bcdb34077eaedd3ccf84e8ddc52a6424271cfd35f27ba0b7f32d7cbdf0dd"
     }
   }
 }

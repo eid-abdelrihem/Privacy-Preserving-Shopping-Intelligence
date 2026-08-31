@@ -10,7 +10,8 @@ from ppsi.training.flower import (
     FlowerLocalAdapter,
 )
 from ppsi.training.objective import ContractSmokeObjective
-from ppsi.training.state import pack_shared_state
+from ppsi.training.sampler import TrainingCursor
+from ppsi.training.state import load_shared_state, pack_shared_state
 
 
 def _core():
@@ -114,4 +115,72 @@ def test_optimizer_and_scheduler_reset_for_each_completed_server_round():
             fresh_round.shared_state[key],
             rtol=0,
             atol=0,
+        )
+
+
+def test_interrupted_fit_resume_keeps_checkpoint_restored_training_state():
+    source = make_stub_model(seed=13)
+    incoming = pack_shared_state(source, source.shared_state_spec())
+    first_batch = make_phase1_batch(seed=100)
+    second_batch = make_phase1_batch(seed=101)
+
+    uninterrupted_core = _momentum_core()
+    load_shared_state(
+        uninterrupted_core.model,
+        incoming,
+        uninterrupted_core.shared_state_spec,
+    )
+    uninterrupted_core.train_step(first_batch)
+    uninterrupted_core.train_step(second_batch)
+    expected_state = pack_shared_state(
+        uninterrupted_core.model,
+        uninterrupted_core.shared_state_spec,
+    )
+
+    resumed_core = _momentum_core()
+    load_shared_state(resumed_core.model, incoming, resumed_core.shared_state_spec)
+    resumed_core.train_step(first_batch)
+    resumed = FlowerLocalAdapter(
+        resumed_core,
+        resumed_core.shared_state_spec,
+        ContributingRowsSmokeWeightPolicy(),
+    ).fit(
+        incoming,
+        [second_batch],
+        outer_round=1,
+        cursor=TrainingCursor(1, 0, 1, 1),
+    )
+
+    assert resumed.summary.final_cursor == TrainingCursor(1, 0, 2, 2)
+    for key in expected_state:
+        torch.testing.assert_close(resumed.shared_state[key], expected_state[key], rtol=0, atol=0)
+
+    expected_optimizer = uninterrupted_core.optimizer.state_dict()
+    actual_optimizer = resumed_core.optimizer.state_dict()
+    assert actual_optimizer["param_groups"] == expected_optimizer["param_groups"]
+    assert actual_optimizer["state"].keys() == expected_optimizer["state"].keys()
+    for key in expected_optimizer["state"]:
+        torch.testing.assert_close(
+            actual_optimizer["state"][key]["momentum_buffer"],
+            expected_optimizer["state"][key]["momentum_buffer"],
+            rtol=0,
+            atol=0,
+        )
+    assert resumed_core.scheduler.state_dict() == uninterrupted_core.scheduler.state_dict()
+
+
+def test_interrupted_fit_resume_still_validates_incoming_server_state():
+    core = _momentum_core()
+    adapter = FlowerLocalAdapter(
+        core,
+        core.shared_state_spec,
+        ContributingRowsSmokeWeightPolicy(),
+    )
+
+    with pytest.raises(ValueError, match="Packed keys mismatch"):
+        adapter.fit(
+            {},
+            [make_phase1_batch()],
+            outer_round=1,
+            cursor=TrainingCursor(1, 0, 0, 0),
         )

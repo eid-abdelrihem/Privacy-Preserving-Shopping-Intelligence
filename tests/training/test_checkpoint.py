@@ -91,6 +91,40 @@ def test_deterministic_sampler_resumes_from_next_batch():
     assert resumed == all_batches[1:]
 
 
+@pytest.mark.parametrize(
+    ("field", "bad_value"),
+    [
+        ("run_id", " "),
+        ("attempt", True),
+        ("best_criterion", float("nan")),
+        ("best_criterion", True),
+    ],
+)
+def test_checkpoint_builder_rejects_invalid_metadata(field: str, bad_value: object):
+    core = _make_core()
+    values = {
+        "run_id": "run-v1__r1__t1__c1__s13__cfgaaaaaaaaaaaa__a1",
+        "attempt": 1,
+        "best_criterion": 1.0,
+    }
+    values[field] = bad_value
+
+    with pytest.raises(ValueError, match=field):
+        build_checkpoint_payload(
+            run_id=values["run_id"],
+            attempt=values["attempt"],
+            model=core.model,
+            optimizer=core.optimizer,
+            scheduler=core.scheduler,
+            grad_scaler=None,
+            cursor=TrainingCursor(None, 0, 0, 0),
+            best_criterion=values["best_criterion"],
+            identity=_identity(),
+            loader_contract=_loader_contract(),
+            scheduler_step_unit="OPTIMIZER_STEP",
+        )
+
+
 def test_checkpoint_exact_next_batch_and_next_step_replay(tmp_path: Path):
     torch.manual_seed(13)
     contract = _loader_contract()
@@ -319,6 +353,68 @@ def test_late_checkpoint_failure_rolls_back_all_runtime_state(tmp_path: Path):
     before_rng = capture_rng_state()
 
     with pytest.raises(CheckpointError, match="runtime state was restored"):
+        load_checkpoint(
+            artifact.path,
+            expected_sha256=artifact.sha256,
+            expected_identity=_identity(),
+            expected_loader_contract=_loader_contract(),
+            core=target,
+            grad_scaler=None,
+        )
+
+    _assert_nested_equal(before_model, target.model.state_dict())
+    _assert_nested_equal(before_optimizer, target.optimizer.state_dict())
+    _assert_nested_equal(before_scheduler, target.scheduler.state_dict())
+    assert target.optimizer_step_count == 7
+    after_rng = capture_rng_state()
+    assert before_rng["python"] == after_rng["python"]
+    assert before_rng["numpy"][0] == after_rng["numpy"][0]
+    np.testing.assert_array_equal(before_rng["numpy"][1], after_rng["numpy"][1])
+    assert before_rng["numpy"][2:] == after_rng["numpy"][2:]
+    torch.testing.assert_close(before_rng["torch_cpu"], after_rng["torch_cpu"], rtol=0, atol=0)
+    assert before_rng["torch_cuda"] == after_rng["torch_cuda"]
+
+
+@pytest.mark.parametrize(
+    ("field", "bad_value", "message"),
+    [
+        ("run_id", "", "run_id"),
+        ("attempt", "not-an-int", "attempt"),
+        ("best_criterion", float("nan"), "best_criterion"),
+    ],
+)
+def test_invalid_checkpoint_metadata_fails_before_runtime_mutation(
+    tmp_path: Path,
+    field: str,
+    bad_value: object,
+    message: str,
+):
+    source = _make_core()
+    source.train_step(make_phase1_batch(seed=42))
+    payload = build_checkpoint_payload(
+        run_id="run-v1__r1__t1__c1__s13__cfgaaaaaaaaaaaa__a1",
+        attempt=1,
+        model=source.model,
+        optimizer=source.optimizer,
+        scheduler=source.scheduler,
+        grad_scaler=None,
+        cursor=TrainingCursor(None, 0, 1, source.optimizer_step_count),
+        best_criterion=1.0,
+        identity=_identity(),
+        loader_contract=_loader_contract(),
+        scheduler_step_unit="OPTIMIZER_STEP",
+    )
+    payload[field] = bad_value
+    artifact = save_checkpoint(tmp_path / f"bad-{field}.pt", payload)
+
+    target = _make_core()
+    target.optimizer_step_count = 7
+    before_model = deepcopy(target.model.state_dict())
+    before_optimizer = deepcopy(target.optimizer.state_dict())
+    before_scheduler = deepcopy(target.scheduler.state_dict())
+    before_rng = capture_rng_state()
+
+    with pytest.raises(CheckpointError, match=message):
         load_checkpoint(
             artifact.path,
             expected_sha256=artifact.sha256,

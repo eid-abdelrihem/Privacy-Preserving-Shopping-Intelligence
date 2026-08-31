@@ -47,7 +47,9 @@ ARTIFACTS: dict[str, str] = {
     "stub_initialization_bridge": "ppsi/training/initialization.py",
     "trainer_result_bridge": "ppsi/training/result.py",
     "contract_smoke_objective": "ppsi/training/objective.py",
+    "contract_smoke_fixtures": "ppsi/training/fixtures.py",
     "contract_stub_model": "ppsi/training/stub_model.py",
+    "federated_smoke_runtime": "scripts/federated/fl_synthetic_smoke.py",
     "unified_trainer_smoke_config": "config/unified_trainer_smoke.v1.json",
     "unified_trainer_smoke_entrypoint": "scripts/training_smoke.py",
     "unified_trainer_smoke_summary": (
@@ -61,14 +63,10 @@ ARTIFACTS: dict[str, str] = {
 _IGNORED_TREE_PARTS = frozenset({"__pycache__", ".pytest_cache"})
 _IGNORED_SUFFIXES = frozenset({".pyc", ".pyo"})
 _GIT_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _SOURCE_PATHS = tuple(
     sorted(
-        {
-            path
-            for path in ARTIFACTS.values()
-            if not path.startswith("docs/evidence/")
-        }
-        | {"uv.lock"}
+        {path for path in ARTIFACTS.values() if not path.startswith("docs/evidence/")} | {"uv.lock"}
     )
 )
 
@@ -85,7 +83,21 @@ def sha256_tree(path: Path, *, root: Path = REPO_ROOT) -> str:
     """Hash a tracked-style tree while excluding interpreter/test caches."""
 
     digest = hashlib.sha256()
-    files = sorted(item for item in path.rglob("*") if _is_hashable_file(item))
+    if root.resolve() == REPO_ROOT.resolve():
+        relative_tree = path.resolve().relative_to(root.resolve()).as_posix()
+        tracked = subprocess.check_output(
+            ["git", "ls-files", "-z", "--", relative_tree],
+            cwd=root,
+            text=True,
+            encoding="utf-8",
+        )
+        files = sorted(
+            root / relative
+            for relative in tracked.split("\0")
+            if relative and _is_hashable_file(root / relative)
+        )
+    else:
+        files = sorted(item for item in path.rglob("*") if _is_hashable_file(item))
     for file_path in files:
         relative = file_path.relative_to(root).as_posix().encode("utf-8")
         content_hash = file_sha256(file_path).encode("ascii")
@@ -275,24 +287,71 @@ def validate_smoke_summary(summary: dict) -> None:
     ):
         raise ValueError("Smoke summary max_abs_diff must be finite and within tolerance")
 
-    repetitions = summary.get("repetitions")
-    if not isinstance(repetitions, list) or len(repetitions) < 2:
-        raise ValueError("Smoke summary requires at least two repetitions")
+    if config.get("num_clients") != 2:
+        raise ValueError("Smoke config must use exactly clients 0 and 1")
 
+    repetitions = summary.get("repetitions")
+    if not isinstance(repetitions, list) or len(repetitions) != config["repeat_runs"]:
+        raise ValueError("Smoke summary repetition count does not match config")
+
+    expected_client_ids = [0, 1]
+    expected_selection_trace = [expected_client_ids for _ in range(config["num_rounds"])]
+    round_max_abs_diffs = []
     reference_digest: str | None = None
     reference_client_ids: object | None = None
-    for repetition in repetitions:
+    for run_index, repetition in enumerate(repetitions):
         if not isinstance(repetition, dict):
             raise TypeError("Smoke repetition must be an object")
+        if repetition.get("run") != run_index:
+            raise ValueError("Smoke repetition run indices must be consecutive from zero")
         trace = repetition.get("tracing_log")
-        if not isinstance(trace, list) or len(trace) < 3:
-            raise ValueError("Each repetition requires at least three traced rounds")
-        if not all(
-            isinstance(record, dict) and record.get("aggregation_oracle_pass") is True
-            for record in trace
-        ):
-            raise ValueError("FedAvg aggregation oracle did not pass every round")
-        for record in trace:
+        if not isinstance(trace, list) or len(trace) != config["num_rounds"]:
+            raise ValueError("Smoke trace round count does not match config")
+        if repetition.get("selected_client_ids") != expected_selection_trace:
+            raise ValueError("Selected client trace must contain exactly clients 0 and 1")
+
+        for expected_round, record in enumerate(trace, start=1):
+            if not isinstance(record, dict):
+                raise TypeError("Smoke trace record must be an object")
+            if record.get("round") != expected_round:
+                raise ValueError("Smoke trace rounds must be consecutive from one")
+            server_input_digest = record.get("server_input_digest")
+            aggregated_digest = record.get("aggregated_digest")
+            for field, digest_value in (
+                ("server_input_digest", server_input_digest),
+                ("aggregated_digest", aggregated_digest),
+            ):
+                if not isinstance(digest_value, str) or not _SHA256_RE.fullmatch(digest_value):
+                    raise ValueError(f"Round {field} must be 64 lowercase hex characters")
+            if expected_round > 1 and server_input_digest != trace[expected_round - 2].get(
+                "aggregated_digest"
+            ):
+                raise ValueError("Smoke trace breaks the aggregated-state redistribution chain")
+            if record.get("aggregation_oracle_pass") is not True:
+                raise ValueError("FedAvg aggregation oracle did not pass every round")
+            if record.get("selected_client_count") != config["num_clients"]:
+                raise ValueError("Each round must select exactly two clients")
+            if record.get("selected_logical_ids") != expected_client_ids:
+                raise ValueError("Each round must select exactly clients 0 and 1")
+            clients = record.get("clients")
+            if not isinstance(clients, list) or len(clients) != 2:
+                raise ValueError("Each round must contain exactly two client records")
+            if not all(isinstance(client, dict) for client in clients):
+                raise TypeError("Smoke client record must be an object")
+            client_record_ids = [client.get("logical_client_id") for client in clients]
+            if any(type(client_id) is not int for client_id in client_record_ids):
+                raise ValueError("Client records must contain integer logical client IDs")
+            if sorted(client_record_ids) != expected_client_ids:
+                raise ValueError("Client records must contain exactly clients 0 and 1")
+            for client in clients:
+                received_digest = client.get("received_digest")
+                for field in ("received_digest", "updated_digest"):
+                    digest_value = client.get(field)
+                    if not isinstance(digest_value, str) or not _SHA256_RE.fullmatch(digest_value):
+                        raise ValueError(f"Client {field} must be 64 lowercase hex characters")
+                if received_digest != server_input_digest:
+                    raise ValueError("Client received_digest must match the round server input")
+
             round_max_abs_diff = record.get("max_abs_diff")
             if (
                 not isinstance(round_max_abs_diff, (int, float))
@@ -301,11 +360,14 @@ def validate_smoke_summary(summary: dict) -> None:
                 or not 0 <= float(round_max_abs_diff) <= 1e-6
             ):
                 raise ValueError("Round max_abs_diff must be finite and within tolerance")
+            round_max_abs_diffs.append(float(round_max_abs_diff))
+
         if not all(record.get("redistribution_pass") is True for record in trace[1:]):
             raise ValueError("Aggregated state was not redistributed after the first round")
         loss_history = repetition.get("global_loss_history")
-        if not isinstance(loss_history, list) or len(loss_history) < 4:
-            raise ValueError("Each repetition requires initial + round loss history")
+        if not isinstance(loss_history, list) or len(loss_history) != config["num_rounds"] + 1:
+            raise ValueError("Each repetition requires initial + one loss per round")
+        loss_rounds = []
         for item in loss_history:
             if not isinstance(item, (list, tuple)) or len(item) != 2:
                 raise ValueError("Malformed global loss history entry")
@@ -313,9 +375,19 @@ def validate_smoke_summary(summary: dict) -> None:
                 raise TypeError("Global loss must be numeric")
             if not math.isfinite(float(item[1])):
                 raise ValueError("Global loss must be finite")
+            loss_rounds.append(item[0])
+        if any(type(round_id) is not int for round_id in loss_rounds) or loss_rounds != list(
+            range(config["num_rounds"] + 1)
+        ):
+            raise ValueError("Global loss round IDs must run from zero through num_rounds")
+
         initial_digest = trace[0].get("server_input_digest")
         final_digest = repetition.get("final_model_digest")
-        if not initial_digest or not final_digest or initial_digest == final_digest:
+        if not isinstance(final_digest, str) or not _SHA256_RE.fullmatch(final_digest):
+            raise ValueError("Final model digest must be 64 lowercase hex characters")
+        if final_digest != trace[-1].get("aggregated_digest"):
+            raise ValueError("Final model digest must match the final aggregated digest")
+        if initial_digest == final_digest:
             raise ValueError("Smoke run did not produce a non-zero global model change")
         client_ids = repetition.get("selected_client_ids")
         if reference_digest is None:
@@ -326,6 +398,9 @@ def validate_smoke_summary(summary: dict) -> None:
                 raise ValueError("Final model digest differs across repetitions")
             if client_ids != reference_client_ids:
                 raise ValueError("Selected logical client order differs across repetitions")
+
+    if float(max_abs_diff) != max(round_max_abs_diffs):
+        raise ValueError("Smoke summary max_abs_diff does not match measured round maximum")
 
 
 def generate() -> None:
