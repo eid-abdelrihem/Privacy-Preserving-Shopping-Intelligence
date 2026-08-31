@@ -11,6 +11,7 @@ import hashlib
 import json
 import logging
 import platform
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -38,7 +39,7 @@ from ppsi.training.flower import (
     ContributingRowsSmokeWeightPolicy,
     FlowerLocalAdapter,
 )
-from ppsi.training.identity import build_trainer_core_manifest
+from ppsi.training.identity import build_trainer_core_manifest, file_sha256
 from ppsi.training.initialization import (
     generate_stub_initialization_fixture,
     load_verified_stub_initialization,
@@ -49,6 +50,7 @@ from scripts.federated.fl_synthetic_smoke import (
     SmokeValidationError,
     TracingFedAvg,
     get_digest,
+    weighted_average_state_dicts,
 )
 
 logger = logging.getLogger(__name__)
@@ -57,6 +59,32 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 client_app = ClientApp()
 SMOKE_RESULT = None
 SMOKE_TRACING_LOG: list[dict] = []
+_GIT_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+class UnifiedTrainerTracingFedAvg(TracingFedAvg):
+    """Record numeric aggregation parity for the S1-PR-05 evidence."""
+
+    def aggregate_train(self, server_round: int, replies):
+        replies_list = list(replies)
+        flower_arrays, metrics = super().aggregate_train(server_round, replies_list)
+        if flower_arrays is None:
+            return flower_arrays, metrics
+
+        updates = [
+            (
+                message.content.parameters_records["arrays"].to_torch_state_dict(),
+                int(message.content.metrics_records["metrics"]["num-examples"]),
+            )
+            for message in replies_list
+        ]
+        oracle_state = weighted_average_state_dicts(updates)
+        flower_state = flower_arrays.to_torch_state_dict()
+        self.tracing_log[-1]["max_abs_diff"] = max(
+            float(torch.max(torch.abs(oracle_state[key] - flower_state[key])).item())
+            for key in oracle_state
+        )
+        return flower_arrays, metrics
 
 
 def _make_core(*, learning_rate: float) -> LocalTrainerCore:
@@ -181,7 +209,7 @@ def get_server_app(config: dict) -> ServerApp:
                 "learning_rate": config["learning_rate"],
             }
         )
-        strategy = TracingFedAvg(
+        strategy = UnifiedTrainerTracingFedAvg(
             expected_clients=config["num_clients"],
             tolerance=config["tolerance"],
             fraction_train=1.0,
@@ -224,16 +252,16 @@ def validate_config(config: dict) -> None:
         raise SmokeValidationError("Invalid unified trainer smoke version")
     if config.get("seed") != 13:
         raise SmokeValidationError("Smoke seed must be 13")
-    if config.get("num_clients", 0) < 2:
-        raise SmokeValidationError("num_clients must be >= 2")
+    if config.get("num_clients") != 2:
+        raise SmokeValidationError("unified_trainer_smoke_v1 requires num_clients == 2")
     if config.get("num_rounds", 0) < 3:
         raise SmokeValidationError("num_rounds must be >= 3")
     if config.get("repeat_runs", 0) < 2:
         raise SmokeValidationError("repeat_runs must be >= 2")
     if float(config.get("learning_rate", 0)) <= 0:
         raise SmokeValidationError("learning_rate must be positive")
-    if float(config.get("tolerance", 0)) <= 0:
-        raise SmokeValidationError("tolerance must be positive")
+    if float(config.get("tolerance", 0)) != 1e-6:
+        raise SmokeValidationError("unified_trainer_smoke_v1 requires tolerance == 1e-6")
 
 
 def load_config(path: Path) -> dict:
@@ -277,10 +305,43 @@ def _git_sha() -> str:
     ).strip()
 
 
-def execute(config: dict) -> dict:
+def validate_source_git_sha(source_git_sha: str, *, require_clean_head: bool) -> str:
+    if not _GIT_SHA_RE.fullmatch(source_git_sha):
+        raise SmokeValidationError("source_git_sha must be 40 lowercase hex characters")
+    exists = subprocess.run(
+        ["git", "cat-file", "-e", f"{source_git_sha}^{{commit}}"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if exists.returncode != 0:
+        raise SmokeValidationError("source_git_sha does not identify an available commit")
+    if require_clean_head:
+        if source_git_sha != _git_sha():
+            raise SmokeValidationError("source_git_sha must equal the current HEAD")
+        status = subprocess.check_output(
+            ["git", "status", "--porcelain", "--untracked-files=all"],
+            cwd=REPO_ROOT,
+            text=True,
+            encoding="utf-8",
+        ).strip()
+        if status:
+            raise SmokeValidationError("Canonical evidence requires a clean working tree")
+    return source_git_sha
+
+
+def execute(config: dict, *, source_git_sha: str | None = None) -> dict:
+    validate_config(config)
+    source_git_sha = validate_source_git_sha(
+        source_git_sha or _git_sha(),
+        require_clean_head=False,
+    )
     repetitions = []
     for run_index in range(config["repeat_runs"]):
         result, trace = run_unified_trainer_smoke(config)
+        for record in trace:
+            record["clients"].sort(key=lambda client: client["logical_client_id"])
         if len(trace) != config["num_rounds"]:
             raise SmokeValidationError("Not all Flower rounds completed")
         if not all(entry["aggregation_oracle_pass"] for entry in trace):
@@ -331,14 +392,24 @@ def execute(config: dict) -> dict:
             }
         ),
         "shared_trainer_core_sha256": trainer_manifest["sha256"],
-        "git_sha": _git_sha(),
+        "source_git_sha": source_git_sha,
     }
+    max_abs_diff = max(
+        float(record["max_abs_diff"])
+        for repetition in repetitions
+        for record in repetition["tracing_log"]
+    )
     return {
         "schema": "unified_trainer_smoke_summary_v1",
         "version": "1",
         "status": "PASS",
         "seed": config["seed"],
         "identities": identities,
+        "aggregation_parity": {
+            "atol": 1e-6,
+            "rtol": 0.0,
+            "max_abs_diff": max_abs_diff,
+        },
         "initialization": {
             "artifact_kind": initialization.artifact_kind,
             "state_sha256": initialization.state_sha256,
@@ -351,7 +422,7 @@ def execute(config: dict) -> dict:
             "flower": flwr.__version__,
             "ray": ray.__version__,
             "platform": platform.platform(),
-            "uv_lock_sha256": hashlib.sha256((REPO_ROOT / "uv.lock").read_bytes()).hexdigest(),
+            "uv_lock_sha256": file_sha256(REPO_ROOT / "uv.lock"),
         },
         "repetitions": repetitions,
     }
@@ -361,9 +432,14 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-git-sha", required=True)
     args = parser.parse_args()
     try:
-        summary = execute(load_config(args.config))
+        source_git_sha = validate_source_git_sha(
+            args.source_git_sha,
+            require_clean_head=True,
+        )
+        summary = execute(load_config(args.config), source_git_sha=source_git_sha)
     except Exception as exc:
         logger.exception("Unified trainer smoke failed")
         summary = {

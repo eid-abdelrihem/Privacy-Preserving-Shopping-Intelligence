@@ -8,11 +8,11 @@
     },
     "entry_point": {
       "path": "scripts/federated/fl_synthetic_smoke.py",
-      "sha256": "dacb31aab92429ba385584f52ff1a3773a68b71717956ed7163379596c6f0750"
+      "sha256": "d9a4c4af0bce162bba2b5f41293cdf841c6f92d83900161c125a9675f9a9d91a"
     },
     "lifecycle_test": {
       "path": "tests/federated/test_fl_synthetic_smoke.py",
-      "sha256": "0e039dcfe62110d524ac4d5f42852f7366e76642d6928f0bc6041ffc304ffbf2"
+      "sha256": "7a41a68ca2c253d51c72de3d8fef4656aa216fbb98d8301c480c145eeaf1e102"
     },
     "documentation": {
       "path": "docs/federated-synthetic-smoke.md",
@@ -20,11 +20,11 @@
     },
     "smoke_summary": {
       "path": "docs/evidence/s1-pr-02/fl_synthetic_smoke_summary.v1.json",
-      "sha256": "b4876e958569ff98c5a5dbe55f3165f803100dd60eac0a950d52566e506b200d"
+      "sha256": "5a53a640ae45952f0233b08b5814703f9d28b023f17889946dd7853871dd82fd"
     },
     "environment_lock": {
       "path": "uv.lock",
-      "sha256": "8143e1c5a2e764cc35be0367f65b640c1242a2722286a79a6b2d5c8627bf5180"
+      "sha256": "cd86bcdb34077eaedd3ccf84e8ddc52a6424271cfd35f27ba0b7f32d7cbdf0dd"
     }
   }
 }

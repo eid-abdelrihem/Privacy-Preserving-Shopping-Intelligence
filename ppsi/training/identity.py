@@ -17,6 +17,7 @@ DEFAULT_TRAINER_CORE_FILES: tuple[str, ...] = (
 )
 
 _TEXT_SUFFIXES = frozenset({".py", ".md", ".json", ".toml", ".txt", ".yaml", ".yml"})
+_TEXT_FILENAMES = frozenset({"uv.lock"})
 
 
 def canonical_file_bytes(path: Path) -> bytes:
@@ -28,7 +29,7 @@ def canonical_file_bytes(path: Path) -> bytes:
     """
 
     data = path.read_bytes()
-    if path.suffix.lower() not in _TEXT_SUFFIXES:
+    if path.name not in _TEXT_FILENAMES and path.suffix.lower() not in _TEXT_SUFFIXES:
         return data
     text = data.decode("utf-8-sig")
     return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
@@ -72,6 +73,13 @@ def build_trainer_core_manifest(
 
 
 def verify_trainer_core_manifest(repo_root: Path, manifest: dict[str, object]) -> None:
+    expected_fields = {"schema", "version", "text_normalization", "files", "sha256"}
+    if set(manifest) != expected_fields:
+        raise ValueError("Trainer core manifest fields do not match v1")
+    if manifest.get("schema") != "shared_trainer_core_manifest_v1":
+        raise ValueError("Trainer core manifest schema mismatch")
+    if manifest.get("version") != "1":
+        raise ValueError("Trainer core manifest version mismatch")
     stored_sha = manifest.get("sha256")
     without_sha = {key: value for key, value in manifest.items() if key != "sha256"}
     actual_manifest_sha = hashlib.sha256(canonical_manifest_bytes(without_sha)).hexdigest()
@@ -82,9 +90,18 @@ def verify_trainer_core_manifest(repo_root: Path, manifest: dict[str, object]) -
     files = manifest.get("files")
     if not isinstance(files, list):
         raise TypeError("Trainer core manifest files must be a list")
+    paths: list[str] = []
     for record in files:
-        if not isinstance(record, dict):
-            raise TypeError("Trainer core manifest record must be a dict")
-        path = repo_root / str(record["path"])
+        if not isinstance(record, dict) or set(record) != {"path", "sha256"}:
+            raise ValueError("Malformed trainer core manifest record")
+        relative_path = record["path"]
+        if not isinstance(relative_path, str):
+            raise TypeError("Trainer core manifest path must be a string")
+        paths.append(relative_path)
+        path = repo_root / relative_path
         if file_sha256(path) != record["sha256"]:
             raise ValueError(f"Trainer core file SHA mismatch: {record['path']}")
+    if len(paths) != len(set(paths)):
+        raise ValueError("Trainer core manifest contains duplicate paths")
+    if tuple(sorted(paths)) != tuple(sorted(DEFAULT_TRAINER_CORE_FILES)):
+        raise ValueError("Trainer core manifest file set does not match v1")

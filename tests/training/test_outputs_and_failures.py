@@ -44,6 +44,25 @@ def test_raw_output_shapes_are_finite_and_activation_free():
     )
 
 
+def test_raw_output_values_are_not_probability_activated():
+    batch = make_phase1_batch(batch_size=1)
+    model = make_stub_model()
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.zero_()
+        model.context_projection.bias.fill_(2.0)
+        model.candidate_projection.bias.fill_(2.0)
+        model.t1_head.bias.copy_(torch.linspace(-3.0, 3.0, model.category_count))
+        model.t2_head.bias.fill_(2.5)
+
+    output = model(batch)
+    torch.testing.assert_close(output.t1_logits[0], model.t1_head.bias, rtol=0, atol=0)
+    torch.testing.assert_close(output.t2_logit, torch.full_like(output.t2_logit, 2.5), rtol=0, atol=0)
+    assert torch.any(output.t1_logits < 0)
+    assert torch.any(output.t1_logits > 1)
+    assert torch.all(output.t3_scores > 1)
+
+
 def test_candidate_axis_permutation_preserves_alignment():
     batch = make_phase1_batch()
     model = make_stub_model()

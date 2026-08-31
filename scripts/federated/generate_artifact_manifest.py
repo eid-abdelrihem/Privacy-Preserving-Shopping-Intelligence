@@ -1,6 +1,12 @@
-import hashlib
 import json
+import sys
 from pathlib import Path
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from ppsi.training.identity import file_sha256
 
 
 def generate_manifest():
@@ -26,12 +32,9 @@ def generate_manifest():
         # We allow missing documentation for now as we might generate it later,
         # but wait, the instruction says to hash documentation too. We should write documentation first.
         if file_path.exists():
-            with open(file_path, "rb") as f:
-                file_hash = hashlib.sha256(f.read()).hexdigest()
-
             manifest["artifacts"][logical_id] = {
                 "path": str(file_path.as_posix()),
-                "sha256": file_hash,
+                "sha256": file_sha256(file_path),
             }
 
     with open(manifest_path, "w", encoding="utf-8") as f:

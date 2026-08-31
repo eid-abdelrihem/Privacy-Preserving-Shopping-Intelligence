@@ -1,11 +1,15 @@
 from __future__ import annotations
 
-import hashlib
 import platform
 import subprocess
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
+
+# Ensure repo root is importable when this script is invoked directly.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 import flwr
 import lightgbm
@@ -16,21 +20,11 @@ import ray
 import sklearn
 import torch
 
+from ppsi.training.identity import file_sha256
+
 EXPECTED_PYTHON = (3, 11, 14)
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
 LOCK_FILE = REPO_ROOT / "uv.lock"
-
-
-def sha256_file(path: Path) -> str:
-    """Return the SHA-256 digest of a file."""
-    digest = hashlib.sha256()
-
-    with path.open("rb") as file:
-        for chunk in iter(lambda: file.read(1024 * 1024), b""):
-            digest.update(chunk)
-
-    return digest.hexdigest()
 
 
 def detect_nvidia_hardware() -> str:
@@ -105,7 +99,7 @@ def main() -> int:
     print(f"architecture: {platform.machine()}")
     print(f"python: {platform.python_version()}")
     print(f"python_executable: {sys.executable}")
-    print(f"uv_lock_sha256: {sha256_file(LOCK_FILE)}")
+    print(f"uv_lock_sha256: {file_sha256(LOCK_FILE)}")
 
     print()
     print("=== Core Package Versions ===")

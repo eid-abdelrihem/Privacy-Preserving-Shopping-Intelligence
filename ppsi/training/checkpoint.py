@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import math
 import os
 import random
 import re
 import tempfile
 import time
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -19,6 +21,7 @@ import torch
 from torch import nn
 from torch.optim import Optimizer
 
+from ppsi.training.core import LocalTrainerCore
 from ppsi.training.sampler import LoaderContract, TrainingCursor
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -121,8 +124,18 @@ def build_checkpoint_payload(
     loader_contract: LoaderContract,
     scheduler_step_unit: str,
 ) -> dict[str, Any]:
-    if attempt < 1:
-        raise ValueError("attempt must be >= 1")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise ValueError("run_id must be a non-empty string")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        raise ValueError("attempt must be an integer >= 1")
+    if best_criterion is not None:
+        if (
+            isinstance(best_criterion, bool)
+            or not isinstance(best_criterion, (int, float))
+            or not math.isfinite(float(best_criterion))
+        ):
+            raise ValueError("best_criterion must be finite or None")
+        best_criterion = float(best_criterion)
     if scheduler_step_unit != "OPTIMIZER_STEP":
         raise ValueError("Unsupported scheduler step unit")
     return {
@@ -217,15 +230,43 @@ def _validate_rng_compatibility(state: dict[str, Any], *, strict_cuda: bool) -> 
         )
 
 
+def _validate_model_state(model: nn.Module, state: object) -> None:
+    if not isinstance(state, Mapping):
+        raise CheckpointError("Checkpoint model_state_dict must be a mapping")
+    current = model.state_dict()
+    if set(state) != set(current):
+        missing = sorted(set(current) - set(state))
+        unexpected = sorted(set(state) - set(current))
+        raise CheckpointError(
+            f"Checkpoint model keys mismatch: missing={missing}, unexpected={unexpected}"
+        )
+    for name, expected in current.items():
+        incoming = state[name]
+        if not isinstance(incoming, torch.Tensor):
+            raise CheckpointError(f"Checkpoint model tensor {name} is not a Tensor")
+        if incoming.shape != expected.shape:
+            raise CheckpointError(
+                f"Checkpoint model tensor {name} shape mismatch: "
+                f"{tuple(incoming.shape)} != {tuple(expected.shape)}"
+            )
+        if incoming.dtype != expected.dtype:
+            raise CheckpointError(
+                f"Checkpoint model tensor {name} dtype mismatch: "
+                f"{incoming.dtype} != {expected.dtype}"
+            )
+        if (incoming.is_floating_point() or incoming.is_complex()) and not torch.isfinite(
+            incoming
+        ).all():
+            raise CheckpointError(f"Checkpoint model tensor {name} contains NaN/Inf")
+
+
 def load_checkpoint(
     path: Path,
     *,
     expected_sha256: str,
     expected_identity: CheckpointIdentity,
     expected_loader_contract: LoaderContract,
-    model: nn.Module,
-    optimizer: Optimizer,
-    scheduler: Any | None,
+    core: LocalTrainerCore,
     grad_scaler: Any | None,
     map_location: torch.device | str = "cpu",
     strict_cuda_rng: bool = True,
@@ -247,24 +288,74 @@ def load_checkpoint(
     )
 
     scheduler_state = payload["scheduler_state_dict"]
-    if (scheduler is None) != (scheduler_state is None):
+    if (core.scheduler is None) != (scheduler_state is None):
         raise CheckpointError("Scheduler presence does not match checkpoint")
     scaler_state = payload["grad_scaler_state"]
     if (grad_scaler is None) != (scaler_state is None):
         raise CheckpointError("GradScaler presence does not match checkpoint")
     _validate_rng_compatibility(payload["rng_state"], strict_cuda=strict_cuda_rng)
 
-    model.load_state_dict(payload["model_state_dict"], strict=True)
-    optimizer.load_state_dict(payload["optimizer_state_dict"])
-    if scheduler is not None:
-        scheduler.load_state_dict(scheduler_state)
-    if grad_scaler is not None:
-        grad_scaler.load_state_dict(scaler_state)
-    restore_rng_state(payload["rng_state"], strict_cuda=strict_cuda_rng)
-
-    return LoadedCheckpoint(
-        cursor=TrainingCursor.from_dict(payload["cursor"]),
-        best_criterion=payload["best_criterion"],
-        run_id=str(payload["run_id"]),
-        attempt=int(payload["attempt"]),
+    _validate_model_state(core.model, payload["model_state_dict"])
+    cursor = TrainingCursor.from_dict(payload["cursor"])
+    run_id = payload.get("run_id")
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise CheckpointError("Checkpoint run_id must be a non-empty string")
+    attempt = payload.get("attempt")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        raise CheckpointError("Checkpoint attempt must be an integer >= 1")
+    if "best_criterion" not in payload:
+        raise CheckpointError("Checkpoint best_criterion is missing")
+    best_criterion = payload["best_criterion"]
+    if best_criterion is not None:
+        if (
+            isinstance(best_criterion, bool)
+            or not isinstance(best_criterion, (int, float))
+            or not math.isfinite(float(best_criterion))
+        ):
+            raise CheckpointError("Checkpoint best_criterion must be finite or None")
+        best_criterion = float(best_criterion)
+    loaded = LoadedCheckpoint(
+        cursor=cursor,
+        best_criterion=best_criterion,
+        run_id=run_id,
+        attempt=attempt,
     )
+    snapshot = {
+        "model": {key: value.detach().clone() for key, value in core.model.state_dict().items()},
+        "optimizer": copy.deepcopy(core.optimizer.state_dict()),
+        "scheduler": (
+            None if core.scheduler is None else copy.deepcopy(core.scheduler.state_dict())
+        ),
+        "grad_scaler": (None if grad_scaler is None else copy.deepcopy(grad_scaler.state_dict())),
+        "optimizer_step_count": core.optimizer_step_count,
+        "rng": capture_rng_state(),
+    }
+
+    try:
+        core.model.load_state_dict(payload["model_state_dict"], strict=True)
+        core.optimizer.load_state_dict(payload["optimizer_state_dict"])
+        if core.scheduler is not None:
+            core.scheduler.load_state_dict(scheduler_state)
+        if grad_scaler is not None:
+            grad_scaler.load_state_dict(scaler_state)
+        restore_rng_state(payload["rng_state"], strict_cuda=strict_cuda_rng)
+        core.optimizer_step_count = cursor.optimizer_step
+    except Exception as exc:
+        try:
+            core.model.load_state_dict(snapshot["model"], strict=True)
+            core.optimizer.load_state_dict(snapshot["optimizer"])
+            if core.scheduler is not None:
+                core.scheduler.load_state_dict(snapshot["scheduler"])
+            if grad_scaler is not None:
+                grad_scaler.load_state_dict(snapshot["grad_scaler"])
+            core.optimizer_step_count = snapshot["optimizer_step_count"]
+            restore_rng_state(snapshot["rng"], strict_cuda=strict_cuda_rng)
+        except (KeyError, RuntimeError, TypeError, ValueError) as rollback_exc:
+            raise CheckpointError(
+                f"Checkpoint load failed and runtime rollback also failed: {rollback_exc}"
+            ) from exc
+        raise CheckpointError(
+            "Checkpoint state application failed; runtime state was restored"
+        ) from exc
+
+    return loaded

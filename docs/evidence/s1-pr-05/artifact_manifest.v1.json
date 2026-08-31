@@ -6,7 +6,11 @@
     },
     "checkpoint_v1": {
       "path": "ppsi/training/checkpoint.py",
-      "sha256": "b544e2bc11de3084a224b95dbbe42f5d0d1856d42c305500729246e2fc142a0d"
+      "sha256": "3b122f5e8ae8e29070928edf5cfec7f80d7739f61607e0348bf291d803b113a1"
+    },
+    "contract_smoke_fixtures": {
+      "path": "ppsi/training/fixtures.py",
+      "sha256": "00bd03670356f25a9a0ca82f3b924d59c2883e33f169a8d610a61cb45b3396c9"
     },
     "contract_smoke_objective": {
       "path": "ppsi/training/objective.py",
@@ -20,13 +24,17 @@
       "path": "ppsi/training/sampler.py",
       "sha256": "59fdd8ca033d278ee2b2e79aa07f2091d8abfbb50d65c84aab76f206745b80f1"
     },
+    "federated_smoke_runtime": {
+      "path": "scripts/federated/fl_synthetic_smoke.py",
+      "sha256": "d9a4c4af0bce162bba2b5f41293cdf841c6f92d83900161c125a9675f9a9d91a"
+    },
     "flower_adapter": {
       "path": "ppsi/training/flower.py",
-      "sha256": "553a2421848f4799172cf9feefaa07f2986fbeb4f841d1e5cde6715649fde63e"
+      "sha256": "45db3cba20a9ae41132d916a53ffb9a4c8fb198420e7628d57310cf58eaf0737"
     },
     "phase1_batch_v1": {
       "path": "ppsi/training/batch.py",
-      "sha256": "4ffdbb1f3460e59d8da71979a9bee08e9020bec933711c6d8bb8443978a3d075"
+      "sha256": "dc9701e1e19d639faf04fd0e656ffad8a58530d3a79b0ce0eaa28a710cb621f9"
     },
     "phase1_model_protocol": {
       "path": "ppsi/training/protocol.py",
@@ -42,7 +50,7 @@
     },
     "shared_trainer_core_manifest": {
       "path": "docs/evidence/s1-pr-05/shared_trainer_core_manifest.v1.json",
-      "sha256": "413049907124be6164b1ddcb9a371086a55163430e2714ec0ce0e0653f03c3c4"
+      "sha256": "42660ba16750ebb64afa1a13f82e93d1264c2529b053670c1ab73d11747b2e4d"
     },
     "stub_initialization_bridge": {
       "path": "ppsi/training/initialization.py",
@@ -50,7 +58,7 @@
     },
     "trainer_identity": {
       "path": "ppsi/training/identity.py",
-      "sha256": "b2e556eb22d50eb55591165da08dc767a30d1138f1196f041505e9fea42137cd"
+      "sha256": "4e1c8ec684908d2becb9adde4e21f8c1774a3dfbd39c01ca3996b2e03ce7fba3"
     },
     "trainer_result_bridge": {
       "path": "ppsi/training/result.py",
@@ -58,11 +66,11 @@
     },
     "unified_trainer_core": {
       "path": "ppsi/training/core.py",
-      "sha256": "8f6aa8e6e4c94c092f16ec5fe8ca4340ba2e536e73538369f4e1ff1ed0dc0144"
+      "sha256": "2dddd8c3d3d97d145da6d2bcd46972af37041635b010bbcee8c7edc492db9096"
     },
     "unified_trainer_docs": {
       "path": "docs/training-interface.md",
-      "sha256": "53eae70624601d5b1fe414a71800aa0feb9af32a4adf086525ee968b6c45db0f"
+      "sha256": "25bc930f9a8686ab10756b6d4a34a10a08ea572715987dc94d8c339a23a58185"
     },
     "unified_trainer_smoke_config": {
       "path": "config/unified_trainer_smoke.v1.json",
@@ -70,15 +78,15 @@
     },
     "unified_trainer_smoke_entrypoint": {
       "path": "scripts/training_smoke.py",
-      "sha256": "cd5da039f11171c819e69e5135a88221ff9ff7850b4bd148a606373fdffe3183"
+      "sha256": "043e39f6e329a97448a21df12a48aa43722ed98a11315f8d1b06cbbc61666bc1"
     },
     "unified_trainer_smoke_summary": {
       "path": "docs/evidence/s1-pr-05/unified_trainer_smoke_summary.v1.json",
-      "sha256": "bc6f3730033433859b9a72900767946bf28acf26bad6b8b652653193843c353d"
+      "sha256": "ff3f83a2bcdf0e2541d98b037ecfab2f87c5e23adc31e5c6a610a64dbd1c9e24"
     },
     "unified_trainer_tests": {
       "path": "tests/training",
-      "sha256": "000a3d53234f3c31afc0811395ab79126d2bdae179cbaae37bc3fc2134bf547c"
+      "sha256": "3658896273a8a2eb8ae09a922bd42ecf04c536eafe602edc97928297f638c0cc"
     }
   },
   "schema": "unified_trainer_artifact_manifest_v1",

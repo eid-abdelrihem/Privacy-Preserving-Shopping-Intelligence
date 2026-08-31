@@ -93,7 +93,8 @@ invalid.
 
 ### 4.4 Empty history
 
-The approved semantic behavior is **ZERO_HIDDEN**:
+The technically selected behavior, pending the recorded governance approval,
+is **ZERO_HIDDEN**:
 
 ```text
 lengths[b] == 0
@@ -252,6 +253,11 @@ Owns only shared-state translation/validation, client loader resolution, calls
 to the same local core, and scalar metric return. The full Flower simulation
 reuses the proven S1-PR-02 lifecycle and its FedAvg oracle.
 
+For R2A v1, client-local optimizer and scheduler state use
+`RESET_EACH_SERVER_ROUND`: a completed server-round boundary resets local
+optimization state before the next fit. Resuming an interrupted fit instead
+restores its checkpoint state and cursor; FedAdam server state is separate.
+
 ## 11. CommonInitialization
 
 The stub model is constructed under one of the allowed seeds `13`, `42`, or
@@ -304,8 +310,11 @@ Resume reconstructs the same permutation and continues from the next batch.
 5. replace the destination with `os.replace` and Windows retry handling;
 6. register the returned SHA in ArtifactRef/ExperimentResult.
 
-Resume verifies file hash and all semantic identities before mutating model or
-optimizer state.
+Resume verifies file hash, semantic identities, and model tensor compatibility
+before applying state. Application is transactional: if optimizer, scheduler,
+scaler, RNG, or progress restore fails, the prior runtime state is restored.
+The normal load path also restores `LocalTrainerCore.optimizer_step_count` from
+the checkpoint cursor.
 
 ## 13. ExperimentResult ownership
 
@@ -343,7 +352,7 @@ uv run --locked ruff check ppsi/training scripts/training_smoke.py scripts/gener
 uv run --locked ruff format --check ppsi/training scripts/training_smoke.py scripts/generate_training_artifact_manifest.py tests/training
 uv run --locked python -m pytest tests/training -v
 uv run --locked python -m pytest -q tests/federated/test_fl_synthetic_smoke.py tests/experiments tests/training
-uv run --locked python scripts/training_smoke.py --config config/unified_trainer_smoke.v1.json --output docs/evidence/s1-pr-05/unified_trainer_smoke_summary.v1.json
+uv run --locked python scripts/training_smoke.py --config config/unified_trainer_smoke.v1.json --output docs/evidence/s1-pr-05/unified_trainer_smoke_summary.v1.json --source-git-sha <COMMIT_A_SHA>
 uv run --locked python scripts/generate_training_artifact_manifest.py
 uv run --locked python scripts/generate_training_artifact_manifest.py --verify
 ```
