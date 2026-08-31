@@ -341,8 +341,8 @@ def validate_smoke_summary(summary: dict) -> None:
             client_record_ids = [client.get("logical_client_id") for client in clients]
             if any(type(client_id) is not int for client_id in client_record_ids):
                 raise ValueError("Client records must contain integer logical client IDs")
-            if sorted(client_record_ids) != expected_client_ids:
-                raise ValueError("Client records must contain exactly clients 0 and 1")
+            if client_record_ids != expected_client_ids:
+                raise ValueError("Client records must contain clients 0 and 1 in order")
             for client in clients:
                 received_digest = client.get("received_digest")
                 for field in ("received_digest", "updated_digest"):

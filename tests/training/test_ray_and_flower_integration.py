@@ -131,7 +131,7 @@ def test_unified_trainer_runs_through_real_flower_three_round_lifecycle(
         for record in repetition["tracing_log"]:
             assert record["selected_client_count"] == 2
             assert record["selected_logical_ids"] == [0, 1]
-            assert sorted(client["logical_client_id"] for client in record["clients"]) == [0, 1]
+            assert [client["logical_client_id"] for client in record["clients"]] == [0, 1]
     assert (
         summary["repetitions"][0]["final_model_digest"]
         == summary["repetitions"][1]["final_model_digest"]
@@ -153,6 +153,11 @@ def test_unified_trainer_runs_through_real_flower_three_round_lifecycle(
     wrong_clients["repetitions"][0]["tracing_log"][0]["selected_client_count"] = 1
     with pytest.raises(ValueError, match="exactly two clients"):
         generate_training_artifact_manifest.validate_smoke_summary(wrong_clients)
+
+    wrong_client_order = deepcopy(summary)
+    wrong_client_order["repetitions"][0]["tracing_log"][0]["clients"].reverse()
+    with pytest.raises(ValueError, match="clients 0 and 1 in order"):
+        generate_training_artifact_manifest.validate_smoke_summary(wrong_client_order)
 
     wrong_max = deepcopy(summary)
     wrong_max["aggregation_parity"]["max_abs_diff"] = 0.0

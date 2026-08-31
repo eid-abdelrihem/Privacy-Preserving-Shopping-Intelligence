@@ -340,6 +340,8 @@ def execute(config: dict, *, source_git_sha: str | None = None) -> dict:
     repetitions = []
     for run_index in range(config["repeat_runs"]):
         result, trace = run_unified_trainer_smoke(config)
+        for record in trace:
+            record["clients"].sort(key=lambda client: client["logical_client_id"])
         if len(trace) != config["num_rounds"]:
             raise SmokeValidationError("Not all Flower rounds completed")
         if not all(entry["aggregation_oracle_pass"] for entry in trace):
