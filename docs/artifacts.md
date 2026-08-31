@@ -53,6 +53,8 @@
 | `UnifiedTrainerArtifactManifest` | `docs/evidence/s1-pr-05/artifact_manifest.v1.json` | v1 | S1-PR-05 | Review / reproducibility |
 | `UnifiedTrainerDocs` | `docs/training-interface.md` | v1 | S1-PR-05 | Developers / downstream lanes |
 | `UnifiedTrainerContractTests` | `tests/training/` | v1 | S1-PR-05 | CI |
+| `ExperimentResultFiles` | `artifacts/experiment-results/*.result.json` | v1 | Experiment runs | S2-SE-06 |
+| `ExperimentResultsTool` | `scripts/experiments/results.py` | v1 | S2-SE-06 | Developers / CI |
 
 ## Rules
 
