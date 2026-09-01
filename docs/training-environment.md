@@ -125,7 +125,8 @@ conda install <package>
 inside the project environment.
 
 A new direct dependency must be added deliberately through `pyproject.toml`
-and the resulting `uv.lock` change must be reviewed in the corresponding PR.
+and the resulting `uv.lock` change must be included and validated in the
+corresponding PR.
 
 ---
 

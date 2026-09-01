@@ -68,15 +68,14 @@ configuration, result identity, common initialization, and R1/R2A comparison.
   `config/experiments/contract_freeze.v1.json`.
 
 The technical freeze was approved for implementation under the project-owner
-decision process. The implementation PR still requires review and approval by
-another team member before merge.
+decision process. Changes use the standard team workflow: required validation,
+then merge by the author. Peer review is optional.
 
 ## S1-PR-05 — Unified Trainer Contract Freeze
 
-**Status:** Proposed for freeze. This decision becomes effective only when the
-S1-PR-05 implementation PR is approved by the required project members and
-merged. The implementation may be reviewed on the branch, but merge/closure
-must not claim unrecorded approval.
+**Status:** Frozen by the merged S1-PR-05 implementation. Later changes use the
+standard team workflow: required validation, then merge by the author. Peer
+review is optional.
 
 The project freezes the following shared trainer decisions:
 
